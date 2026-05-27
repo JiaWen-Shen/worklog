@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Worklog · 2026 年 2 月</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --muted: #6b7280;
+    --accent-work: #2563eb;
+    --accent-personal: #059669;
+    --accent-archive: #9ca3af;
+    --border: #e5e7eb;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 40px 24px 80px;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 40px; }
+  h1 { font-size: 32px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+  nav.month-nav { margin-top: 12px; font-size: 14px; }
+  nav.month-nav a { color: var(--muted); text-decoration: none; margin-right: 12px; }
+  nav.month-nav a:hover { color: var(--fg); }
+  nav.month-nav .current { color: var(--fg); font-weight: 600; }
+
+  .highlights {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .highlights h2 { font-size: 16px; margin: 0 0 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .highlights ol { margin: 0; padding-left: 20px; }
+  .highlights li { margin-bottom: 6px; }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--fg); }
+  .tab-btn.active { color: var(--fg); }
+  .tab-btn[data-tab="personal"].active { border-bottom-color: var(--accent-personal); }
+  .tab-btn[data-tab="work"].active { border-bottom-color: var(--accent-work); }
+  .tab-btn .count { font-size: 11px; color: var(--muted); font-weight: normal; margin-left: 4px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .project.work { border-left-color: var(--accent-work); }
+  .project.personal { border-left-color: var(--accent-personal); }
+  .project.archive { border-left-color: var(--accent-archive); opacity: 0.85; }
+  h4.archive-divider {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-archive);
+    border-top: 1px dashed var(--border);
+    padding-top: 20px;
+    margin: 28px 0 16px;
+    font-weight: 600;
+  }
+  h4.archive-divider::before { content: "▤ "; }
+  .project h3 { margin: 0 0 6px; font-size: 20px; font-weight: 700; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .project .repo { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--muted); font-weight: normal; }
+  .project .desc { color: var(--muted); font-size: 14px; margin: 0 0 16px; font-style: italic; }
+  .project ul { margin: 0; padding-left: 20px; }
+  .project ul li { margin-bottom: 8px; }
+  .stat { display: inline-block; font-size: 12px; background: #f3f4f6; color: var(--muted); padding: 2px 8px; border-radius: 10px; font-weight: normal; }
+  .stat.token { background: #fef3c7; color: #92400e; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .methodology { margin-top: 40px; padding: 16px 20px; background: #fafaf7; border: 1px dashed var(--border); border-radius: 6px; font-size: 13px; color: var(--muted); }
+  .methodology summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+  .methodology p, .methodology ul { margin: 8px 0; }
+  .methodology code { font-size: 12px; }
+  .empty-state {
+    padding: 32px 24px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 14px;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    background: #fafaf7;
+  }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.9em; background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+  footer { margin-top: 60px; text-align: center; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>2026 年 2 月工作摘要</h1>
+  <div class="subtitle">Karen Shen · 共 2 個專案 · 10 commits (no-merge) · 24K tokens · USD $0.08 估算</div>
+  <nav class="month-nav">
+    <a href="index.html">← 月份索引</a>
+    <span class="current">2026-02</span>
+    <a href="2026-03.html">2026-03 →</a>
+  </nav>
+</header>
+
+<section class="highlights">
+  <h2>本月重點</h2>
+  <ol>
+    <li><strong>Holylot 籤詩網站 Initial commit（2/16）</strong> — 3-step UI flow（含問題確認步驟）、question input UX、API error handling 雛形</li>
+    <li><strong>2/28</strong>：60 六十甲子籤典故、Ollama DeepSeek redesign 含 inline poem preview（為下個月 100 關帝靈籤典故 + 其他系統內容鋪路）</li>
+    <li><strong>meeting-summarizer skill 起步</strong>（claude-hooks 三個 commit）— 之後變成個人主力會議整理工具</li>
+    <li><strong>Claude Code 使用量極低</strong>：本月僅 24K tokens / USD $0.08，幾乎所有開發都靠手動或 Claude Design</li>
+  </ol>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab-btn active" data-tab="work" role="tab">工作<span class="count">(0)</span></button>
+  <button class="tab-btn" data-tab="personal" role="tab">個人<span class="count">(2)</span></button>
+</div>
+
+<div class="tab-panel active" id="panel-work">
+  <div class="empty-state">本月無工作專案 commit。</div>
+</div>
+
+<div class="tab-panel" id="panel-personal">
+
+<div class="project personal">
+  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">7 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">線上 AI 籤詩深度解讀網站 — 2/16 開出 repo，本月做出 MVP 與基本資料（六十甲子籤典故 60 則）。</p>
+  <ul>
+    <li><strong>2/16</strong>：Initial commit「籤詩解讀網站」、README + project info、3-step UI flow（加問題確認步驟）、question input UX 改善、API error handling</li>
+    <li><strong>2/28</strong>：60 六十甲子籤典故 stories 全數加入、switch to Ollama DeepSeek + redesign UX（inline poem preview）</li>
+  </ul>
+</div>
+
+<h4 class="archive-divider">已結案 / Archive</h4>
+
+<div class="project archive">
+  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（5/20 併進 dotclaude — 已退役）</span> <span class="stat">3 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">個人 Claude Code skill / hook 開發；2 月開始記錄 meeting-summarizer skill。</p>
+  <ul>
+    <li><strong>2/11</strong>：meeting-summarizer skill backup（首版）、README 完整文件、把 README 搬進 meeting-summarizer 目錄</li>
+  </ul>
+</div>
+
+</div><!-- /panel-personal -->
+
+<details class="methodology">
+  <summary>Token 計算方法</summary>
+  <p>從 <code>~/.claude/projects/</code> + <code>~/Jottacloud/.claude.backup-20260520-123736/projects/</code>（5/20 遷移前的舊資料）的 session JSONL 抓 <code>usage</code>。2 月只有 1 則 message / 24K tokens / USD $0.08，本月開發幾乎全靠手動編碼或 Claude Design。</p>
+</details>
+
+<footer>
+  Generated 2026-05-27 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
+</footer>
+
+</div>
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabs.forEach(b => b.classList.toggle('active', b === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+      history.replaceState(null, '', '#' + target);
+    });
+  });
+  // Default to personal since work is empty for Feb
+  document.querySelector('.tab-btn[data-tab="personal"]').click();
+  const hash = location.hash.replace('#', '');
+  if (hash === 'work' || hash === 'personal') {
+    document.querySelector(`.tab-btn[data-tab="${hash}"]`).click();
+  }
+</script>
+</body>
+</html>
