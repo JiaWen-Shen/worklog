@@ -117,6 +117,23 @@
     border-radius: 10px;
     font-weight: normal;
   }
+  .stat.token {
+    background: #fef3c7;
+    color: #92400e;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .methodology {
+    margin-top: 40px;
+    padding: 16px 20px;
+    background: #fafaf7;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .methodology summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+  .methodology p, .methodology ul { margin: 8px 0; }
+  .methodology code { font-size: 12px; }
   code {
     font-family: ui-monospace, "SF Mono", Menlo, monospace;
     font-size: 0.9em;
@@ -132,7 +149,7 @@
 
 <header>
   <h1>2026 年 5 月工作摘要</h1>
-  <div class="subtitle">Karen Shen · 共 5 個專案 · 127 commits (no-merge)</div>
+  <div class="subtitle">Karen Shen · 共 5 個專案 · 127 commits (no-merge) · 1.01B tokens · $2,481 估算</div>
   <nav class="month-nav">
     <a href="../index.html">← 月份索引</a>
     <span class="current">2026-05</span>
@@ -157,7 +174,7 @@
 <div class="tab-panel active" id="panel-work">
 
 <div class="project work">
-  <h3>hie-rei <span class="repo">trendlife-general/hie-rei</span> <span class="stat">10 Karen commits + 多 PR merge</span></h3>
+  <h3>hie-rei <span class="repo">trendlife-general/hie-rei</span> <span class="stat">10 Karen commits + 多 PR merge</span> <span class="stat token">634M tok · $1,705</span></h3>
   <p class="desc">TrendLife HIE 設計團隊的 Kaleidoscope mockup repo，設計師都在這 vibe code 寫 mockup；所有 PR review、branch hygiene、協作流程靠 <code>.claude/</code> 設定支撐。</p>
   <ul>
     <li><strong>design-pr-review skill</strong>：協助設計師把 PR 畫面 render 出來比對 before/after 差異、偵測 CSS violations（hardcoded vs TLDS tokens）、按嚴重度分類的 designer-led PR review skill
@@ -171,7 +188,7 @@
 </div>
 
 <div class="project work">
-  <h3>AI-design <span class="repo">JiaWen-Shen/AI-design</span> <span class="stat">14 commits</span></h3>
+  <h3>AI-design <span class="repo">JiaWen-Shen/AI-design</span> <span class="stat">14 commits</span> <span class="stat token">100M tok · $224</span></h3>
   <p class="desc">給設計師的 vibe coding 教學系列簡報 repo（AI × Git 協作課程），每週一份 deck 給設計團隊內訓。</p>
   <ul>
     <li><strong>Week 2</strong>（5/11–12）：push-rejected scenario rework + PR merge strategy deck</li>
@@ -186,7 +203,7 @@
 <div class="tab-panel" id="panel-personal">
 
 <div class="project personal">
-  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">62 commits</span></h3>
+  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">62 commits</span> <span class="stat token">31M tok · $16</span></h3>
   <p class="desc">線上 AI 籤詩深度解讀網站（<a href="https://holylot.app">holylot.app</a>）— 個人副業，5/24 大改版聚焦解讀品質。</p>
   <ul>
     <li><strong>資料整理</strong>：月老籤 4 廟（台南大天后宮 27 + 樂成宮 40 + 台南媽祖 + 保生大帝）、觀音靈籤 audit + 校正 #1-36、樂成宮意解從官網重抓、關帝靈籤 #71、六十甲子籤 OCR 故事標題清理 51 cases</li>
@@ -199,7 +216,7 @@
 </div>
 
 <div class="project personal">
-  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（已併進 dotclaude）</span> <span class="stat">26 commits</span></h3>
+  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（已併進 dotclaude）</span> <span class="stat">26 commits</span> <span class="stat token">0.6M tok · $1</span></h3>
   <p class="desc">個人 Claude Code hook / skill 設定 + daily activity summary 儲存 repo；5/20 併進 dotclaude 達跨裝置 parity。</p>
   <ul>
     <li>17 份 daily summaries（5/1 ~ 5/26）</li>
@@ -211,7 +228,7 @@
 </div>
 
 <div class="project personal">
-  <h3>~/dotclaude <span class="repo">JiaWen-Shen/dotclaude（private）</span> <span class="stat">25 commits</span></h3>
+  <h3>~/dotclaude <span class="repo">JiaWen-Shen/dotclaude（private）</span> <span class="stat">25 commits</span> <span class="stat token">232M tok · $505</span></h3>
   <p class="desc">Claude Code 全域設定（CLAUDE.md / skills / hooks / scripts）的 source-of-truth git repo，跨裝置同步機制。</p>
   <ul>
     <li><strong>5/20 大遷移</strong>：<code>~/.claude/</code> 搬出 Jottacloud（jottad bulk-move 砍過 36 個 skill 之教訓）、claude-hooks 併入、bootstrap-symlinks.sh + bootstrap-nested-repos.sh、strip secrets + untrack runtime state、達 100% cross-device parity</li>
@@ -221,6 +238,17 @@
 </div>
 
 </div><!-- /panel-personal -->
+
+<details class="methodology">
+  <summary>Token 計算方法</summary>
+  <p>從 <code>~/.claude/projects/-Users-karen-shen-Jottacloud-vibe/</code> 的 session JSONL 抓出每則 message 的 <code>usage</code>（input / output / cache_creation / cache_read），先以 <code>cwd</code> 分類，落在 vibe 根目錄者再用 session 內 tool calls 的 file paths 歸到 dominant project。剩 0.5% 無法歸類。</p>
+  <p>金額按 Claude Sonnet 4.6 standard 估算（$3 / $15 input / output per M、$3.75 cache 5m write、$6 cache 1h write、$0.30 cache read）。實際帳單以 Anthropic 為準；Opus / Haiku 訊息按 model 欄位個別計價。Cache read 佔總 token 量 96%，但只佔成本約 12%。</p>
+  <ul>
+    <li>不計：merge commits、其他人在同 repo 的 commits</li>
+    <li>計入：自己 author 的 commits（兩個 email：karen_shen@trendmicro.com + kevenkmupsy@gmail.com）</li>
+    <li>未分類的 4.8M tokens 多半是 vibe 根目錄 cross-project meta 操作</li>
+  </ul>
+</details>
 
 <footer>
   Generated 2026-05-27 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
