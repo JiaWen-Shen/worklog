@@ -10,6 +10,7 @@
     --muted: #6b7280;
     --accent-work: #2563eb;
     --accent-personal: #059669;
+    --accent-archive: #9ca3af;
     --border: #e5e7eb;
     --card: #ffffff;
   }
@@ -64,6 +65,7 @@
   .tab-btn.active { color: var(--fg); }
   .tab-btn[data-tab="personal"].active { border-bottom-color: var(--accent-personal); }
   .tab-btn[data-tab="work"].active { border-bottom-color: var(--accent-work); }
+  .tab-btn[data-tab="archive"].active { border-bottom-color: var(--accent-archive); }
   .tab-btn .count {
     font-size: 11px;
     color: var(--muted);
@@ -83,6 +85,18 @@
   }
   .project.work { border-left-color: var(--accent-work); }
   .project.personal { border-left-color: var(--accent-personal); }
+  .project.archive { border-left-color: var(--accent-archive); opacity: 0.85; }
+  h4.archive-divider {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-archive);
+    border-top: 1px dashed var(--border);
+    padding-top: 20px;
+    margin: 28px 0 16px;
+    font-weight: 600;
+  }
+  h4.archive-divider::before { content: "▤ "; }
   .project h3 {
     margin: 0 0 6px;
     font-size: 20px;
@@ -217,24 +231,26 @@
 </div>
 
 <div class="project personal">
-  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（已併進 dotclaude）</span> <span class="stat">26 commits</span> <span class="stat token">0.6M tok · USD $1</span></h3>
-  <p class="desc">個人 Claude Code hook / skill 設定 + daily activity summary 儲存 repo；5/20 併進 dotclaude 達跨裝置 parity。</p>
-  <ul>
-    <li>17 份 daily summaries（5/1 ~ 5/26）</li>
-    <li>5/3 fortune-stick-interpreter skill 與 web app prompts 同步</li>
-    <li>5/20 skills consolidation：搬進 <code>~/Jottacloud/.claude/</code>、drop claude-hooks/ ignore</li>
-    <li>5/24 <strong>SessionStart hook</strong>：跨所有 repos + Projects 的當日活動掃描</li>
-    <li>5/26 design-pr-review × Michael's pr-review 比較分析文件</li>
-  </ul>
-</div>
-
-<div class="project personal">
   <h3>~/dotclaude <span class="repo">JiaWen-Shen/dotclaude（private）</span> <span class="stat">25 commits</span> <span class="stat token">232M tok · USD $505</span></h3>
   <p class="desc">Claude Code 全域設定（CLAUDE.md / skills / hooks / scripts）的 source-of-truth git repo，跨裝置同步機制。</p>
   <ul>
     <li><strong>5/20 大遷移</strong>：<code>~/.claude/</code> 搬出 Jottacloud（jottad bulk-move 砍過 36 個 skill 之教訓）、claude-hooks 併入、bootstrap-symlinks.sh + bootstrap-nested-repos.sh、strip secrets + untrack runtime state、達 100% cross-device parity</li>
     <li><strong>5/21</strong> design-pr-review submodule 多次 bump：multi-line CSS parser / 3-layer self-verification / sync-scroll fix / verify-wrapper cluster scope / SVG augmented missing / rule-scope fix</li>
     <li><strong>5/26–27</strong> design-pr-review skill 移出 dotclaude（避免 auto-load 成個人 skill）、team skill development feedback memory、MSGraph token auto-refresh feedback、fortune-stick status update、obsolete plans 清除</li>
+  </ul>
+</div>
+
+<h4 class="archive-divider">已結案 / Archive</h4>
+
+<div class="project archive">
+  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（5/20 併進 dotclaude — 已退役）</span> <span class="stat">26 commits</span> <span class="stat token">0.6M tok · USD $1</span></h3>
+  <p class="desc">個人 Claude Code hook / skill 設定 + daily activity summary 儲存 repo；5/20 整個 repo 內容併進 ~/dotclaude，原 repo 不再活躍。</p>
+  <ul>
+    <li>17 份 daily summaries（5/1 ~ 5/26，5/20 後改寫入 dotclaude）</li>
+    <li>5/3 fortune-stick-interpreter skill 與 web app prompts 同步</li>
+    <li>5/20 skills consolidation：搬進 <code>~/Jottacloud/.claude/</code>、drop claude-hooks/ ignore</li>
+    <li>5/24 <strong>SessionStart hook</strong>：跨所有 repos + Projects 的當日活動掃描</li>
+    <li>5/26 design-pr-review × Michael's pr-review 比較分析文件</li>
   </ul>
 </div>
 

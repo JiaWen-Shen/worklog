@@ -10,6 +10,7 @@
     --muted: #6b7280;
     --accent-work: #2563eb;
     --accent-personal: #059669;
+    --accent-archive: #9ca3af;
     --border: #e5e7eb;
     --card: #ffffff;
   }
@@ -64,6 +65,7 @@
   .tab-btn.active { color: var(--fg); }
   .tab-btn[data-tab="personal"].active { border-bottom-color: var(--accent-personal); }
   .tab-btn[data-tab="work"].active { border-bottom-color: var(--accent-work); }
+  .tab-btn[data-tab="archive"].active { border-bottom-color: var(--accent-archive); }
   .tab-btn .count {
     font-size: 11px;
     color: var(--muted);
@@ -83,6 +85,18 @@
   }
   .project.work { border-left-color: var(--accent-work); }
   .project.personal { border-left-color: var(--accent-personal); }
+  .project.archive { border-left-color: var(--accent-archive); opacity: 0.85; }
+  h4.archive-divider {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-archive);
+    border-top: 1px dashed var(--border);
+    padding-top: 20px;
+    margin: 28px 0 16px;
+    font-weight: 600;
+  }
+  h4.archive-divider::before { content: "▤ "; }
   .project h3 {
     margin: 0 0 6px;
     font-size: 20px;
@@ -190,17 +204,6 @@
 </div>
 
 <div class="project work">
-  <h3>cross-team-submod <span class="repo">karen-shen_tmemu/cross-team-submod</span> <span class="stat">24 commits</span> <span class="stat token">—</span></h3>
-  <p class="desc">給其他設計團隊參考用的 submodule 工作流 template repo（generic version of TrendLife-UX-design-team）。</p>
-  <ul>
-    <li><strong>4/13–14</strong>：設計師 CLAUDE.md snippet + setup guide、bilingual TOC、Method 1（new user）vs Method 2（existing user）、project-level Phase B hook、generic template for other teams</li>
-    <li><strong>4/15</strong>：onboarding 簡化（Claude Code 全程問問題）、bug report flow（回報到 karen_shen@trendmicro.com 而非自我除錯）、let Claude Code auto-fix AND report</li>
-    <li><strong>4/16</strong>：Local Cache + TTL toolkit for Company / Dept guidelines</li>
-    <li><strong>4/17</strong>：subtree→submodule migration flow + guide for Peter</li>
-  </ul>
-</div>
-
-<div class="project work">
   <h3>TrendLife-UX-design-team <span class="repo">trendlife-general/TrendLife-UX-design-team</span> <span class="stat">25 commits</span> <span class="stat token">—</span></h3>
   <p class="desc">設計團隊主 repo；4 月做 subtree vs submodule 對照實驗（Karen-test branch）+ 撰寫 git-operation-guide。</p>
   <ul>
@@ -219,14 +222,6 @@
 </div>
 
 <div class="project work">
-  <h3>preview-hub-gui <span class="repo">karen-shen_tmemu/preview-hub-gui（已結案）</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
-  <p class="desc">內部 Preview Hub 上傳 GUI 工具 POC，給設計師用瀏覽器拖檔上傳 mockup；5/1 結案改用 mockup-auto-upload skill。</p>
-  <ul>
-    <li><strong>4/29</strong>：Initial commit + POC、GitHub.com / api.github.com（EMU on Cloud 而非 GHES）、workflow input key fix、workflow logs 解壓、SSO / 401 / 404 友善錯誤訊息、live Pages URL + EMU SSO 授權說明</li>
-  </ul>
-</div>
-
-<div class="project work">
   <h3>uxd-req-collector <span class="repo">karen-shen_tmemu/uxd-req-collector</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
   <p class="desc">多來源 UXD 需求收集器（Teams / Outlook → digest）；本月 scaffold 完成 + W15 digest 試跑。</p>
   <ul>
@@ -235,9 +230,30 @@
   </ul>
 </div>
 
-<div class="project work">
-  <h3>rei-hie-migration <span class="repo">trendlife-general/rei-hie-migration（handoff docs）</span> <span class="stat">—</span> <span class="stat token">—</span></h3>
-  <p class="desc">REI → HIE 設計 repo 切換的 handoff 文件 repo。</p>
+<h4 class="archive-divider">已結案 / Archive</h4>
+
+<div class="project archive">
+  <h3>cross-team-submod <span class="repo">karen-shen_tmemu/cross-team-submod（🅿️ 擱置）</span> <span class="stat">24 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">給其他設計團隊參考用的 submodule 工作流 template repo；目前擱置等 Department repo 配置方案。</p>
+  <ul>
+    <li><strong>4/13–14</strong>：設計師 CLAUDE.md snippet + setup guide、bilingual TOC、Method 1（new user）vs Method 2（existing user）、project-level Phase B hook、generic template for other teams</li>
+    <li><strong>4/15</strong>：onboarding 簡化（Claude Code 全程問問題）、bug report flow（回報到 karen_shen@trendmicro.com 而非自我除錯）、let Claude Code auto-fix AND report</li>
+    <li><strong>4/16</strong>：Local Cache + TTL toolkit for Company / Dept guidelines</li>
+    <li><strong>4/17</strong>：subtree→submodule migration flow + guide for Peter</li>
+  </ul>
+</div>
+
+<div class="project archive">
+  <h3>preview-hub-gui <span class="repo">karen-shen_tmemu/preview-hub-gui（✅ 5/1 結案）</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">內部 Preview Hub 上傳 GUI 工具 POC，給設計師用瀏覽器拖檔上傳 mockup；5/1 結案改用 mockup-auto-upload skill。</p>
+  <ul>
+    <li><strong>4/29</strong>：Initial commit + POC、GitHub.com / api.github.com（EMU on Cloud 而非 GHES）、workflow input key fix、workflow logs 解壓、SSO / 401 / 404 友善錯誤訊息、live Pages URL + EMU SSO 授權說明</li>
+  </ul>
+</div>
+
+<div class="project archive">
+  <h3>rei-hie-migration <span class="repo">trendlife-general/rei-hie-migration（handoff 完成）</span> <span class="stat">—</span> <span class="stat token">—</span></h3>
+  <p class="desc">REI → HIE 設計 repo 切換的 handoff 文件 repo；handoff 完成後不再活躍維護。</p>
   <ul>
     <li>4/27 加入 handoff 文件（含遷移路徑說明）</li>
   </ul>
@@ -260,8 +276,10 @@
   </ul>
 </div>
 
-<div class="project personal">
-  <h3>line-obsidian-bot <span class="repo">JiaWen-Shen/line-obsidian-bot（已結案）</span> <span class="stat">7 commits</span> <span class="stat token">—</span></h3>
+<h4 class="archive-divider">已結案 / Archive</h4>
+
+<div class="project archive">
+  <h3>line-obsidian-bot <span class="repo">JiaWen-Shen/line-obsidian-bot（✅ 4/27 結案）</span> <span class="stat">7 commits</span> <span class="stat token">—</span></h3>
   <p class="desc">LINE → Obsidian 自動筆記同步 bot（Cloudflare Worker + scheduled handler），結案上線後本機只 git pull。</p>
   <ul>
     <li><strong>4/8</strong>：post-processing script 合併相鄰 LINE notes、GitHub 422 sha 衝突 retry with suffix、merge script + cron auth + architecture docs</li>
@@ -269,9 +287,9 @@
   </ul>
 </div>
 
-<div class="project personal">
-  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（5/20 併進 dotclaude）</span> <span class="stat">24 commits</span> <span class="stat token">—</span></h3>
-  <p class="desc">個人 Claude Code hook / skill 設定 + daily activity summary 儲存 repo。</p>
+<div class="project archive">
+  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（5/20 併進 dotclaude — 已退役）</span> <span class="stat">24 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">個人 Claude Code hook / skill 設定 + daily activity summary 儲存 repo；5/20 整個 repo 內容併進 ~/dotclaude，原 repo 不再活躍。</p>
   <ul>
     <li>14 份 daily summaries（4/14 ~ 4/30）</li>
     <li><strong>4/14</strong>：fortune-stick references 搬 backup folder + 加 project memory</li>
