@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Worklog · 2026 年 5 月</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --muted: #6b7280;
+    --accent-work: #2563eb;
+    --accent-personal: #059669;
+    --border: #e5e7eb;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 40px 24px 80px;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 40px; }
+  h1 { font-size: 32px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+  nav.month-nav { margin-top: 12px; font-size: 14px; }
+  nav.month-nav a { color: var(--muted); text-decoration: none; margin-right: 12px; }
+  nav.month-nav a:hover { color: var(--fg); }
+  nav.month-nav .current { color: var(--fg); font-weight: 600; }
+
+  .highlights {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .highlights h2 { font-size: 16px; margin: 0 0 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .highlights ol { margin: 0; padding-left: 20px; }
+  .highlights li { margin-bottom: 6px; }
+
+  h2.category {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+    margin-top: 48px;
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+  h2.category.work::before { content: "■ "; color: var(--accent-work); }
+  h2.category.personal::before { content: "■ "; color: var(--accent-personal); }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .project.work { border-left-color: var(--accent-work); }
+  .project.personal { border-left-color: var(--accent-personal); }
+  .project h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .project .repo {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: normal;
+  }
+  .project .desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 16px;
+    font-style: italic;
+  }
+  .project ul { margin: 0; padding-left: 20px; }
+  .project ul li { margin-bottom: 8px; }
+  .project ul ul { margin-top: 6px; padding-left: 18px; }
+  .project ul ul li { margin-bottom: 2px; font-size: 14px; color: #374151; }
+  .stat {
+    display: inline-block;
+    font-size: 12px;
+    background: #f3f4f6;
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: normal;
+  }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.9em;
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  footer { margin-top: 60px; text-align: center; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>2026 年 5 月工作摘要</h1>
+  <div class="subtitle">Karen Shen · 共 5 個專案 · 127 commits (no-merge)</div>
+  <nav class="month-nav">
+    <a href="../index.html">← 月份索引</a>
+    <span class="current">2026-05</span>
+  </nav>
+</header>
+
+<section class="highlights">
+  <h2>本月重點</h2>
+  <ol>
+    <li><strong>design-pr-review skill</strong> 從草稿到上架 hie-rei main，再搬到 AI-design 成 source-of-truth；5/26 一天 5 PR 連續優化</li>
+    <li><strong>vibe coding 教學系列</strong>（AI-design）Week 2-4 三場簡報 + designer × AI Git cheat sheet</li>
+    <li><strong>Holylot 籤詩網站</strong> 5/24 大改版 — 校對品質、citations 實驗、feedback loop</li>
+    <li><strong>~/dotclaude 跨裝置基礎建設</strong> — 5/20 ~/.claude/ 搬出 Jottacloud，純走 git sync 達 100% parity</li>
+  </ol>
+</section>
+
+<h2 class="category work">工作</h2>
+
+<div class="project work">
+  <h3>hie-rei <span class="repo">trendlife-general/hie-rei</span> <span class="stat">10 Karen commits + 多 PR merge</span></h3>
+  <p class="desc">TrendLife HIE 設計團隊的 Kaleidoscope mockup repo，設計師都在這 vibe code 寫 mockup；所有 PR review、branch hygiene、協作流程靠 <code>.claude/</code> 設定支撐。</p>
+  <ul>
+    <li><strong>design-pr-review skill</strong>：協助設計師把 PR 畫面 render 出來比對 before/after 差異、偵測 CSS violations（hardcoded vs TLDS tokens）、按嚴重度分類的 designer-led PR review skill
+      <ul>
+        <li>5/21 上架 main（PR #290 / #291）+ HTML guide + feedback icon 🐛 → 📋</li>
+        <li>5/26 一日 5 PR：bash safety hooks concept refactor (#323) / violations 按 type group + sticky heading + count chip (#324) / inline-style sub-classify + severity tier (block/warn/nit) + ignore filtering (#326) / sessionstart hook 自動清 local merged branches (#329)</li>
+      </ul>
+    </li>
+    <li><strong>mockup-auto-upload</strong>：P0 path check 加 Finder copy-path 引導（5/1）</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>AI-design <span class="repo">JiaWen-Shen/AI-design</span> <span class="stat">14 commits</span></h3>
+  <p class="desc">給設計師的 vibe coding 教學系列簡報 repo（AI × Git 協作課程），每週一份 deck 給設計團隊內訓。</p>
+  <ul>
+    <li><strong>Week 2</strong>（5/11–12）：push-rejected scenario rework + PR merge strategy deck</li>
+    <li><strong>Week 3</strong>（5/18–19）：Git Vocabulary（commit/push、branch/fork、changes management）、19 slides 結構（Type A/B/C repo、agent session、commit/push rhythm）、PR review + merge conflict</li>
+    <li><strong>Week 4</strong>（5/26）：GitHub for Designers — AI × Git + design-pr-review，包中英文版</li>
+    <li>5/26–27：design-pr-review skill 從 <code>~/dotclaude/skills/</code> 搬來成 source-of-truth、<code>sync-to-hie-rei.sh</code>、designer × AI agent Git cheat sheet（HTML / MD / PDF）</li>
+  </ul>
+</div>
+
+<h2 class="category personal">個人</h2>
+
+<div class="project personal">
+  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">62 commits</span></h3>
+  <p class="desc">線上 AI 籤詩深度解讀網站（<a href="https://holylot.app">holylot.app</a>）— 個人副業，5/24 大改版聚焦解讀品質。</p>
+  <ul>
+    <li><strong>資料整理</strong>：月老籤 4 廟（台南大天后宮 27 + 樂成宮 40 + 台南媽祖 + 保生大帝）、觀音靈籤 audit + 校正 #1-36、樂成宮意解從官網重抓、關帝靈籤 #71、六十甲子籤 OCR 故事標題清理 51 cases</li>
+    <li><strong>功能 / UX</strong>：OCR 照片上傳 + 文字搜尋取代系統選擇器、HUPR-style redesign、C 系配色 + dark mode、TinyURL → Cloudflare KV、share API harden + rate limit、question-rank 拆分（六甲標籤 + 台語呆字）</li>
+    <li><strong>SEO 三波</strong>：Phase 1+2（479 SSG oracle pages + JSON-LD FAQ/Breadcrumb schema + keyword-rich H1 + sitemap + /about + /faq）；Phase 3 第一波（8 系統首頁 + /sources + /disclaimer + hreflang）</li>
+    <li><strong>5/24 大改版</strong>：校對模型 Sonnet 4.6 → Haiku 4.5、純 regex Taiwan rules、Wikipedia 風格 citation (A+F) 後 revert 改 FAQ trust statement、e-gate 問題品質 hint（E2 籠統 / E4 多面向混雜）、feedback loop（👍👎 + 資料勘誤回報）、品牌改 Holylot 深度解籤 + 贊助外連 BobaBoba</li>
+    <li><strong>CI / Infra</strong>：GitHub Actions CI/CD（lint + build + health check + concurrency）、Fly.io 冷啟動 retry、curl 安裝 flyctl 繞 superfly action 失效、Jottacloud × Next.js cache 處理（symlink 嘗試後 revert 改 GUI 排除）</li>
+    <li><strong>5/26 結案</strong>：A/B v3 — regex 後處理 clean rate 實際 100%（5 個「leaks」皆 false positive）、Footer 錯字修正、feedback API 移除</li>
+  </ul>
+</div>
+
+<div class="project personal">
+  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（已併進 dotclaude）</span> <span class="stat">26 commits</span></h3>
+  <p class="desc">個人 Claude Code hook / skill 設定 + daily activity summary 儲存 repo；5/20 併進 dotclaude 達跨裝置 parity。</p>
+  <ul>
+    <li>17 份 daily summaries（5/1 ~ 5/26）</li>
+    <li>5/3 fortune-stick-interpreter skill 與 web app prompts 同步</li>
+    <li>5/20 skills consolidation：搬進 <code>~/Jottacloud/.claude/</code>、drop claude-hooks/ ignore</li>
+    <li>5/24 <strong>SessionStart hook</strong>：跨所有 repos + Projects 的當日活動掃描</li>
+    <li>5/26 design-pr-review × Michael's pr-review 比較分析文件</li>
+  </ul>
+</div>
+
+<div class="project personal">
+  <h3>~/dotclaude <span class="repo">JiaWen-Shen/dotclaude（private）</span> <span class="stat">25 commits</span></h3>
+  <p class="desc">Claude Code 全域設定（CLAUDE.md / skills / hooks / scripts）的 source-of-truth git repo，跨裝置同步機制。</p>
+  <ul>
+    <li><strong>5/20 大遷移</strong>：<code>~/.claude/</code> 搬出 Jottacloud（jottad bulk-move 砍過 36 個 skill 之教訓）、claude-hooks 併入、bootstrap-symlinks.sh + bootstrap-nested-repos.sh、strip secrets + untrack runtime state、達 100% cross-device parity</li>
+    <li><strong>5/21</strong> design-pr-review submodule 多次 bump：multi-line CSS parser / 3-layer self-verification / sync-scroll fix / verify-wrapper cluster scope / SVG augmented missing / rule-scope fix</li>
+    <li><strong>5/26–27</strong> design-pr-review skill 移出 dotclaude（避免 auto-load 成個人 skill）、team skill development feedback memory、MSGraph token auto-refresh feedback、fortune-stick status update、obsolete plans 清除</li>
+  </ul>
+</div>
+
+<footer>
+  Generated 2026-05-27 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
+</footer>
+
+</div>
+</body>
+</html>
