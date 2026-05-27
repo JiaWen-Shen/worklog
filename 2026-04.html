@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Worklog · 2026 年 4 月</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --muted: #6b7280;
+    --accent-work: #2563eb;
+    --accent-personal: #059669;
+    --border: #e5e7eb;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 40px 24px 80px;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 40px; }
+  h1 { font-size: 32px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+  nav.month-nav { margin-top: 12px; font-size: 14px; }
+  nav.month-nav a { color: var(--muted); text-decoration: none; margin-right: 12px; }
+  nav.month-nav a:hover { color: var(--fg); }
+  nav.month-nav .current { color: var(--fg); font-weight: 600; }
+
+  .highlights {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .highlights h2 { font-size: 16px; margin: 0 0 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .highlights ol { margin: 0; padding-left: 20px; }
+  .highlights li { margin-bottom: 6px; }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--fg); }
+  .tab-btn.active { color: var(--fg); }
+  .tab-btn[data-tab="personal"].active { border-bottom-color: var(--accent-personal); }
+  .tab-btn[data-tab="work"].active { border-bottom-color: var(--accent-work); }
+  .tab-btn .count {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: normal;
+    margin-left: 4px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .project.work { border-left-color: var(--accent-work); }
+  .project.personal { border-left-color: var(--accent-personal); }
+  .project h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .project .repo {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: normal;
+  }
+  .project .desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 16px;
+    font-style: italic;
+  }
+  .project ul { margin: 0; padding-left: 20px; }
+  .project ul li { margin-bottom: 8px; }
+  .project ul ul { margin-top: 6px; padding-left: 18px; }
+  .project ul ul li { margin-bottom: 2px; font-size: 14px; color: #374151; }
+  .stat {
+    display: inline-block;
+    font-size: 12px;
+    background: #f3f4f6;
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: normal;
+  }
+  .stat.token {
+    background: #fef3c7;
+    color: #92400e;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .methodology {
+    margin-top: 40px;
+    padding: 16px 20px;
+    background: #fafaf7;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .methodology summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+  .methodology p, .methodology ul { margin: 8px 0; }
+  .methodology code { font-size: 12px; }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.9em;
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  footer { margin-top: 60px; text-align: center; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>2026 年 4 月工作摘要</h1>
+  <div class="subtitle">Karen Shen · 共 10 個專案 · 202 commits (no-merge) · 10.9M tokens · USD $37 估算</div>
+  <nav class="month-nav">
+    <a href="../index.html">← 月份索引</a>
+    <span class="current">2026-04</span>
+    <a href="2026-05.html">2026-05 →</a>
+  </nav>
+</header>
+
+<section class="highlights">
+  <h2>本月重點</h2>
+  <ol>
+    <li><strong>設計團隊 Git/AI 教學基礎建設啟動</strong>（AI-design Week 1-2、cross-team-submod template、TrendLife-UX-design-team Karen-test 實驗、Designer Multi-Layer Repo Architecture proposal）</li>
+    <li><strong>Holylot 籤詩網站</strong> 早期版本上線 — Vitest 測試、SEO/OG/PWA、GA4、吉凶速查 全 60 stick、FAQ accordion</li>
+    <li><strong>Preview Hub 自動化</strong> — preview-hub-gui POC GUI、rei-hie-migration handoff、hie-rei mockup-auto-upload preview mode</li>
+    <li><strong>line-obsidian-bot</strong> 結案上 Cloudflare Worker（4/27 移交 scheduled handler）</li>
+    <li><strong>Claude Code 使用量低</strong> — 本月大量 design / docs 工作主要靠 Claude Design 或手動，5 月才大幅 ramp up</li>
+  </ol>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab-btn active" data-tab="work" role="tab">工作<span class="count">(7)</span></button>
+  <button class="tab-btn" data-tab="personal" role="tab">個人<span class="count">(3)</span></button>
+</div>
+
+<div class="tab-panel active" id="panel-work">
+
+<div class="project work">
+  <h3>AI-design <span class="repo">JiaWen-Shen/AI-design</span> <span class="stat">60 commits</span> <span class="stat token">2.9M tok · USD $28</span></h3>
+  <p class="desc">給設計師的 vibe coding 教學系列簡報 + 設計團隊內訓 source repo；4 月啟動，Week 1-2 鋪基礎概念。</p>
+  <ul>
+    <li><strong>Week 1（4/8）</strong>：GitHub for UI Designers outline、Git vs Figma 對照（Staging Area、Branch vs Fork）、用 Claude Code 操作 Git、四層 repo 架構、CLAUDE.md 多 repo workflow</li>
+    <li><strong>Week 2（4/20）</strong>：Git Architecture PPTX（中英雙語，遵循 Week 1 style）、local vs remote、folder setup、branch workflow、rebase / force push + safety net</li>
+    <li><strong>Claude Design sharing deck（4/21–22）</strong>：31 slides Q&A-driven、Claude Code CLI vs Desktop 比較、Claude Design vs CLI designer handoff、anti-AI-slop、audience Q&A prep</li>
+    <li><strong>Designer Multi-Layer Repo Architecture proposal（4/16）</strong>：多層 repo 架構提案 + Next Phase + Discussion slides、Figma 連結、archive HTML diagram</li>
+    <li><strong>4/13–14</strong>：git subtree vs submodule test report、designer setup guide（雙語）、weekly meeting minutes、verify AI git operations + submodule case study、subtree→submodule migration flow</li>
+    <li><strong>4/29</strong>：Week 2 slides 3-5 rework、S3 hosting setup screenshots for Preview Hub guide</li>
+    <li>context window management guide for designers（4/2）</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>cross-team-submod <span class="repo">karen-shen_tmemu/cross-team-submod</span> <span class="stat">24 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">給其他設計團隊參考用的 submodule 工作流 template repo（generic version of TrendLife-UX-design-team）。</p>
+  <ul>
+    <li><strong>4/13–14</strong>：設計師 CLAUDE.md snippet + setup guide、bilingual TOC、Method 1（new user）vs Method 2（existing user）、project-level Phase B hook、generic template for other teams</li>
+    <li><strong>4/15</strong>：onboarding 簡化（Claude Code 全程問問題）、bug report flow（回報到 karen_shen@trendmicro.com 而非自我除錯）、let Claude Code auto-fix AND report</li>
+    <li><strong>4/16</strong>：Local Cache + TTL toolkit for Company / Dept guidelines</li>
+    <li><strong>4/17</strong>：subtree→submodule migration flow + guide for Peter</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>TrendLife-UX-design-team <span class="repo">trendlife-general/TrendLife-UX-design-team</span> <span class="stat">25 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">設計團隊主 repo；4 月做 subtree vs submodule 對照實驗（Karen-test branch）+ 撰寫 git-operation-guide。</p>
+  <ul>
+    <li><strong>4/13</strong>：Karen-test folder 切 subtree workflow testing → 改 proper subtree → 再改 submodule（pointer 更新多次比較）、subtree sync 用 GitHub Actions（.subtrees.yml）、skills/uxr submodule</li>
+    <li><strong>4/13 docs</strong>：git-operation-guide.md（branch workflow + sync status check）、test report 雙語</li>
+    <li><strong>4/14</strong>：Karen-test-submodule pointer 多次 bump（含 TOC、sync check、guide）</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>hie-rei <span class="repo">trendlife-general/hie-rei</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">TrendLife HIE 設計團隊的 Kaleidoscope mockup repo；本月主要做自動 preview upload。</p>
+  <ul>
+    <li><strong>4/29–30</strong>：mockup-auto-upload Preview mode（one-off remote preview）、concept-shuhan 註冊 auto preview upload（含 self-contain assets + 一度 revert）、index.html rename（omni-war-room-rei / mockup-kaleida-main）</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>preview-hub-gui <span class="repo">karen-shen_tmemu/preview-hub-gui（已結案）</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">內部 Preview Hub 上傳 GUI 工具 POC，給設計師用瀏覽器拖檔上傳 mockup；5/1 結案改用 mockup-auto-upload skill。</p>
+  <ul>
+    <li><strong>4/29</strong>：Initial commit + POC、GitHub.com / api.github.com（EMU on Cloud 而非 GHES）、workflow input key fix、workflow logs 解壓、SSO / 401 / 404 友善錯誤訊息、live Pages URL + EMU SSO 授權說明</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>uxd-req-collector <span class="repo">karen-shen_tmemu/uxd-req-collector</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">多來源 UXD 需求收集器（Teams / Outlook → digest）；本月 scaffold 完成 + W15 digest 試跑。</p>
+  <ul>
+    <li><strong>4/10</strong>：initial scaffold、chatTopic auto-resolve、local dev setup、bilingual README + AIUX test project config</li>
+    <li><strong>4/13</strong>：unified config loader + digest/validate/list-chats CLI、W15 AI x UX team weekly digest、W15 leave digest from Outlook inbox/archive</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>rei-hie-migration <span class="repo">trendlife-general/rei-hie-migration（handoff docs）</span> <span class="stat">—</span> <span class="stat token">—</span></h3>
+  <p class="desc">REI → HIE 設計 repo 切換的 handoff 文件 repo。</p>
+  <ul>
+    <li>4/27 加入 handoff 文件（含遷移路徑說明）</li>
+  </ul>
+</div>
+
+</div><!-- /panel-work -->
+
+<div class="tab-panel" id="panel-personal">
+
+<div class="project personal">
+  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">37 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">線上 AI 籤詩深度解讀網站（<a href="https://holylot.app">holylot.app</a>）— 4 月正式上線，主力做品質基礎建設與資料完備。</p>
+  <ul>
+    <li><strong>4/3 測試框架</strong>：Vitest 補單元測試（四個模組）、passWithNoTests 避免 hook 誤報、InflateRaw unhandled rejection 修正</li>
+    <li><strong>4/3–4 上線</strong>：品牌 logo / favicon、SEO metadata、Google Search Console、OG 圖、PWA manifest、GA4 + Core Web Vitals、FAQ 頁面、隨喜贊助、籤詩搜尋、媽祖靈籤合併、/api/health endpoint</li>
+    <li><strong>4/5 內容深化</strong>：吉凶速查 全 60 stick 覆蓋（六十甲子籤 51 + 1-9 補齊 + 第五籤甲申）、易經卦象 collapsible、FAQ 改 accordion + 解釋 interpretation variance、temple disclaimer 固定 footer、fude rank labels、qwen3-235b 為預設、question-specific rank in poem preview</li>
+    <li><strong>4/5 穩定性</strong>：IP-based rate limiting on /api/interpret、streaming 錯誤 surface（402 insufficient credits）、空 interpretation 不存 share URL、OpenRouter API key validation health check、cost-free local dev:test script</li>
+    <li><strong>4/14, 4/21</strong>：design assets 加入、stripe backup code、呂祖靈籤 raw scraped backup</li>
+    <li><strong>4/2</strong>：TinyURL 縮網址 + Sonnet 4.6 校對 agent</li>
+  </ul>
+</div>
+
+<div class="project personal">
+  <h3>line-obsidian-bot <span class="repo">JiaWen-Shen/line-obsidian-bot（已結案）</span> <span class="stat">7 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">LINE → Obsidian 自動筆記同步 bot（Cloudflare Worker + scheduled handler），結案上線後本機只 git pull。</p>
+  <ul>
+    <li><strong>4/8</strong>：post-processing script 合併相鄰 LINE notes、GitHub 422 sha 衝突 retry with suffix、merge script + cron auth + architecture docs</li>
+    <li><strong>4/21–27</strong>：.gitignore、worker 把 merge logic 從 local cron 搬進 scheduled handler（4/27 結案）</li>
+  </ul>
+</div>
+
+<div class="project personal">
+  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（5/20 併進 dotclaude）</span> <span class="stat">24 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">個人 Claude Code hook / skill 設定 + daily activity summary 儲存 repo。</p>
+  <ul>
+    <li>14 份 daily summaries（4/14 ~ 4/30）</li>
+    <li><strong>4/14</strong>：fortune-stick references 搬 backup folder + 加 project memory</li>
+    <li><strong>4/15</strong>：figma-vs-git source files 追蹤、.gitignore 修正、daily-summaries / wording-reviews 改 track</li>
+    <li><strong>4/21</strong>：vibe monorepo permission allowlist、git fetch * allowlist、sync-health-check 補強</li>
+    <li><strong>4/27</strong>：home-server-research with Pi 5 evaluation + rei-hie-migration handoff 紀錄</li>
+    <li><strong>4/29–30</strong>：Mac mini evaluation + home-server-research 結案、preview-hub-gui 加 gitignore、hie-rei sub-repo 加 gitignore</li>
+  </ul>
+</div>
+
+</div><!-- /panel-personal -->
+
+<details class="methodology">
+  <summary>Token 計算方法</summary>
+  <p>從 <code>~/.claude/projects/</code> + <code>~/Jottacloud/.claude.backup-20260520-123736/projects/</code>（5/20 遷移前的舊資料）的 session JSONL 抓 <code>usage</code>，按 cwd + session 內 tool calls 的 file paths 歸類。</p>
+  <p>4 月 Claude Code 使用量低，大部分專案都顯示 <code>—</code>（不在 session log）。主因是當時很多 docs / design 工作走 <strong>Claude Design</strong> 或手動編碼，到 5 月才大規模轉用 Claude Code。AI-design 與 dotclaude/.claude 是少數有 Claude Code 紀錄的，合計約 10.9M tokens / USD $37。</p>
+  <p>金額按 Claude Sonnet 4.6 standard 估算（$3 / $15 input / output per M、$3.75–6 cache write、$0.30 cache read）。實際帳單以 Anthropic 為準。</p>
+</details>
+
+<footer>
+  Generated 2026-05-27 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
+</footer>
+
+</div>
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabs.forEach(b => b.classList.toggle('active', b === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+      history.replaceState(null, '', '#' + target);
+    });
+  });
+  const hash = location.hash.replace('#', '');
+  if (hash === 'work' || hash === 'personal') {
+    document.querySelector(`.tab-btn[data-tab="${hash}"]`).click();
+  }
+</script>
+</body>
+</html>
