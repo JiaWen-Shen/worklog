@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Worklog · 2026 年 3 月</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --muted: #6b7280;
+    --accent-work: #2563eb;
+    --accent-personal: #059669;
+    --accent-archive: #9ca3af;
+    --border: #e5e7eb;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 40px 24px 80px;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 40px; }
+  h1 { font-size: 32px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+  nav.month-nav { margin-top: 12px; font-size: 14px; }
+  nav.month-nav a { color: var(--muted); text-decoration: none; margin-right: 12px; }
+  nav.month-nav a:hover { color: var(--fg); }
+  nav.month-nav .current { color: var(--fg); font-weight: 600; }
+
+  .highlights {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .highlights h2 { font-size: 16px; margin: 0 0 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .highlights ol { margin: 0; padding-left: 20px; }
+  .highlights li { margin-bottom: 6px; }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--fg); }
+  .tab-btn.active { color: var(--fg); }
+  .tab-btn[data-tab="personal"].active { border-bottom-color: var(--accent-personal); }
+  .tab-btn[data-tab="work"].active { border-bottom-color: var(--accent-work); }
+  .tab-btn .count {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: normal;
+    margin-left: 4px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .project.work { border-left-color: var(--accent-work); }
+  .project.personal { border-left-color: var(--accent-personal); }
+  .project.archive { border-left-color: var(--accent-archive); opacity: 0.85; }
+  h4.archive-divider {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-archive);
+    border-top: 1px dashed var(--border);
+    padding-top: 20px;
+    margin: 28px 0 16px;
+    font-weight: 600;
+  }
+  h4.archive-divider::before { content: "▤ "; }
+  .project h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .project .repo {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: normal;
+  }
+  .project .desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 16px;
+    font-style: italic;
+  }
+  .project ul { margin: 0; padding-left: 20px; }
+  .project ul li { margin-bottom: 8px; }
+  .project ul ul { margin-top: 6px; padding-left: 18px; }
+  .project ul ul li { margin-bottom: 2px; font-size: 14px; color: #374151; }
+  .stat {
+    display: inline-block;
+    font-size: 12px;
+    background: #f3f4f6;
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: normal;
+  }
+  .stat.token {
+    background: #fef3c7;
+    color: #92400e;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .methodology {
+    margin-top: 40px;
+    padding: 16px 20px;
+    background: #fafaf7;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .methodology summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+  .methodology p, .methodology ul { margin: 8px 0; }
+  .methodology code { font-size: 12px; }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.9em;
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  footer { margin-top: 60px; text-align: center; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>2026 年 3 月工作摘要</h1>
+  <div class="subtitle">Karen Shen · 共 5 個專案 · 208 commits (no-merge) · 25.9M tokens · USD $43 估算</div>
+  <nav class="month-nav">
+    <a href="../index.html">← 月份索引</a>
+    <span class="current">2026-03</span>
+    <a href="2026-04.html">2026-04 →</a>
+  </nav>
+</header>
+
+<section class="highlights">
+  <h2>本月重點</h2>
+  <ol>
+    <li><strong>TrendLife UI Mockup</strong> 是當月主力 — 167 commits 大量設計探索：Constellation 概念、Eva / Yuki / Mei / Grace / Yvonne 角色 view、Bloom / Kaleidoscope rebrand、Japan press conference 在地化、VD 多人協作流程（已於 4 月結案）</li>
+    <li><strong>teams-to-confluence</strong> 啟動 — 從 Initial commit → workflow category → Railway → Fly.io 部署，3/31 加 AI summary digest + 安全性修正</li>
+    <li><strong>Holylot 籤詩網站</strong> 早期成形 — 100 關帝靈籤典故、Ollama → OpenRouter + Qwen3-32b、純 client-side 分享 (URL hash + deflate)、Fly.io 部署、月底 RWD + logo</li>
+    <li><strong>line-obsidian-bot</strong> Initial commit（3/16，Cloudflare Workers + GitHub API；4 月才結案上線）</li>
+  </ol>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab-btn active" data-tab="work" role="tab">工作<span class="count">(2)</span></button>
+  <button class="tab-btn" data-tab="personal" role="tab">個人<span class="count">(3)</span></button>
+</div>
+
+<div class="tab-panel active" id="panel-work">
+
+<div class="project work">
+  <h3>teams-to-confluence <span class="repo">karen-shen_tmemu/teams-to-confluence</span> <span class="stat">16 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">Teams pinned messages → Confluence 自動同步 poller，3/16 啟動、3/31 上 Fly.io Tokyo 每 15 分鐘 poll。</p>
+  <ul>
+    <li><strong>3/16</strong>：Initial commit（Teams pin → Confluence sync poller）</li>
+    <li><strong>3/17</strong>：workflow category、ui_updates 頁面 layout（newest first、live links、bullet summary）、last-updated header、README（setup + execution modes + category guide）、debug-sync auto-load .env、createPage 修 ESM hoisting</li>
+    <li><strong>3/20</strong>：ui_updates Live Links section 修 + per-update summaries 改善</li>
+    <li><strong>3/23</strong>：Railway 部署 + MSAL silent token refresh</li>
+    <li><strong>3/31</strong>：Fly.io 部署（15-min polling）、section titles 修、state 同步、attachments 讀 Teams attachment / forwarded msg / card、AI summary digest 置頂於 requirement / others 頁、security 修（HTML-escape attachment names + validate contentUrl scheme）、npm scripts source .env.msgraph</li>
+  </ul>
+</div>
+
+<h4 class="archive-divider">已結案 / Archive</h4>
+
+<div class="project archive">
+  <h3>trendlife-ui-mockup <span class="repo">JiaWen-Shen/trendlife-ui-mockup（✅ 2026-04-27 結案）</span> <span class="stat">167 commits</span> <span class="stat token">18.8M tok · USD $30</span></h3>
+  <p class="desc">TrendLife 「AI 守護家庭」UI mockup 探索 repo（多 view、多場景、多人協作）；4/27 結案後移交，5/27 也記得 spec link：https://trendlife-ui-mockup.vercel.app</p>
+  <ul>
+    <li><strong>3/3–3/4</strong>：Initial commit Scene 1、TrendLife brand guide（Geist font、logo SVG）、AI butler floating chat、dinner booking scene（5-step group order）、AI 步驟 CRUD、collapsible stories、Vercel deploy script</li>
+    <li><strong>3/6–3/8</strong>：grandma member mockup + spec、suspicious call card、Teens View（Yvonne scene2-2）、Manager's View（Eva）10 screens + i18n、scene1 todo 連結與 View 流程</li>
+    <li><strong>3/9 constellation 概念誕生</strong>：Guardian Arc Option B、Eva's view（Eva at center、Grace health report + chat）、A/B version toggle、AI Butler chat tab、voice input UI（mic orb + pulse rings）、Eva tab=default、dark/light toggle、constellation-spec 中英切換 + screen navigator、scam call + phishing link detail screens、family member photos、redirect index</li>
+    <li><strong>3/10</strong>：日本名稱化（Mei / Yuki / Hiro / Mayumi）、Yuki's Report 創作卡片 + skill bars、AI Butler FAB → logo-mark、Eva view Orb FAB + arc gradient、constellation edges flow particles、Showcase satellite node 加進 Yuki's home、S9 Family Showcase、aibutler/ constellation/ 資料夾重整</li>
+    <li><strong>3/11–3/12</strong>：Kaleidoscope rebrand、stage mode、Yuki portfolio、health alert popup、Kaleidoscope orb animation、文化祭 2024 redesign、REI security architecture slide、Eva's view 更新</li>
+    <li><strong>3/13</strong>：CrewCreate → Bloom rebrand、Yuki growth/showcase pages、Eva s4/s12 bloom-icon header、wearable BP alert（168/112）、simplify tab bars（Eva: Family+Events / Yuki: Family+Bloom）、replace kaleidoscope-icon with mandala SVG、Yuki home 阿嬤通知含生日蛋糕更新、s13 daily safety digest links、VD collaboration scripts（setup.command + submit.command）</li>
+    <li><strong>3/14</strong>：mockup-mei-v2（VD layout + Bloom branding）、yuki-v2、Yuki iPad Pro 11" landscape mockup、iPad workspace 改 Canva / NotebookLM-style editor、collapsible Today's Updates、AI-guided sessions</li>
+    <li><strong>3/16 AIButler-VD 多人協作正式啟動</strong>：CLAUDE.md + VD collaboration guide（auto PR creation rule、pre-work checklist、第一次修改檔案流程、appendix C）、archive 非 active 檔案、Yuki age 12 / Hiro age 16、Mei → Mayumi 改名、grandma BP alert AI intervention copy 重寫、constellation 增高、Bloom → Creative Folder、chat input bar full width + pill shape 修、main 套用 AIButler-SNS branch UI</li>
+    <li><strong>3/17</strong>：Kaleidoscope chat page + mandala icon + nav links + design-conventions.md（拆出 UI rules）、emoji → Material icons、Cultural Festival → WIP、interaction rule（non-linked 元素不可看起來可點）、GenZ toolbar（Stickers / Beat Sync / Speed Ramp / Auto Caption / AR Lens 紫色 tint）、Share settings panel + Family screen on Yuki iPad、Yuki-centric constellation relationship graph、Family screen restyle 成 bento cards、CLAUDE.md 加 workflow rules + deployment URLs、design system auto-indexing 機制、Japan press conference 在地化、page overlap 修</li>
+    <li><strong>3/19</strong>：Protection & Yuki growth report chart-first UI、navMap highlight 修 + profile back button</li>
+    <li><strong>3/20</strong>：send button → arrow_upward Material Symbols、revert VD structural changes (restore Karen's version)</li>
+    <li><strong>3/24, 3/26</strong>：record-mayumi demo script、COLLAB.md（多人協作計劃 + VD branch 識別 + PR 流程）、story.md 加進 CLAUDE.md @ 引入（VD Claude 自動載入產品故事線）、VD_GUIDE story.md auto-load 說明</li>
+  </ul>
+</div>
+
+</div><!-- /panel-work -->
+
+<div class="tab-panel" id="panel-personal">
+
+<div class="project personal">
+  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">15 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">線上 AI 籤詩深度解讀網站 — 3 月做 100 關帝靈籤典故、純 client-side 分享、Fly.io 部署、月底加 logo + RWD（4 月正式上線）。</p>
+  <ul>
+    <li><strong>3/2 內容</strong>：100 關帝靈籤典故 stories、server-side 簡→繁中文轉換、enforce Traditional Chinese output in AI interpretation prompt</li>
+    <li><strong>3/17</strong>：消除 DeepSeek R1 7b 的英文 / 混語輸出</li>
+    <li><strong>3/26</strong>：Ollama → OpenRouter + Qwen3-32b 切換</li>
+    <li><strong>3/27</strong>：純 client-side 分享（URL hash + deflate 壓縮、不需後端）、URL 同步解籤狀態、分享連結存資料庫、修 OpenCC 誤轉「幹→干」、OCR 腳本（ocr_ydm.py / merge_ocr.py）、OCR 資料合併、UI 更新、Fly.io 部署設定、典故列全部故事改精簡兩句（主角 + 啟示）</li>
+    <li><strong>3/28</strong>：標題加回首頁連結、解讀完成後 auto-update URL hash</li>
+    <li><strong>3/31</strong>：logo favicon、RWD 佈局、UI / UX 改善</li>
+  </ul>
+</div>
+
+<h4 class="archive-divider">已結案 / Archive</h4>
+
+<div class="project archive">
+  <h3>line-obsidian-bot <span class="repo">JiaWen-Shen/line-obsidian-bot（✅ 4/27 結案）</span> <span class="stat">2 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">LINE → Obsidian 自動筆記同步 bot；3 月只開了 repo + Initial commit。</p>
+  <ul>
+    <li>3/16：Initial commit（Cloudflare Workers + GitHub API）+ project repo URL to CLAUDE.md</li>
+  </ul>
+</div>
+
+<div class="project archive">
+  <h3>claude-hooks <span class="repo">JiaWen-Shen/claude-hooks（5/20 併進 dotclaude — 已退役）</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">個人 Claude Code skill / hook 開發；3 月主要強化 fortune-stick-interpreter skill + 加 meeting-summarizer skill。</p>
+  <ul>
+    <li><strong>3/26</strong>：track meeting-summarizer skill、track vibe-coding-design-tips.pptx、fortune-stick-interpreter 加 6-step flow + 福德正神靈籤 reference + PDF script + outputs 結構、移除 uigen / 重複 claude-skills/ / pdf_test.zip、停止追蹤 Github/ 目錄</li>
+  </ul>
+</div>
+
+</div><!-- /panel-personal -->
+
+<details class="methodology">
+  <summary>Token 計算方法</summary>
+  <p>從 <code>~/.claude/projects/</code> + <code>~/Jottacloud/.claude.backup-20260520-123736/projects/</code>（5/20 遷移前的舊資料）的 session JSONL 抓 <code>usage</code>，按 cwd + session 內 tool calls 的 file paths 歸類。</p>
+  <p>3 月 Claude Code 使用集中在 trendlife-ui-mockup（18.8M tok / USD $30）+ dotclaude/.claude（6.5M / $12）；其他專案多為 Claude Design 或手動編碼，沒留下 Claude Code session 紀錄。teams-to-confluence 是 Sonnet 4.6 開的（不在這個 vibe-bucketed log 內）。</p>
+  <p>金額按 Claude Sonnet 4.6 standard 估算。實際帳單以 Anthropic 為準。</p>
+</details>
+
+<footer>
+  Generated 2026-05-27 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
+</footer>
+
+</div>
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabs.forEach(b => b.classList.toggle('active', b === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+      history.replaceState(null, '', '#' + target);
+    });
+  });
+  const hash = location.hash.replace('#', '');
+  if (hash === 'work' || hash === 'personal') {
+    document.querySelector(`.tab-btn[data-tab="${hash}"]`).click();
+  }
+</script>
+</body>
+</html>
