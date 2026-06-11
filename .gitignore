@@ -1,1 +1,4 @@
 .DS_Store
+.claude_review_state.json
+.env
+node_modules/

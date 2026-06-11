@@ -175,9 +175,9 @@
 <section class="highlights">
   <h2>本月重點</h2>
   <ol>
-    <li><strong>設計團隊 Git/AI 教學基礎建設啟動</strong>（AI-design Week 1-2、cross-team-submod template、TrendLife-UX-design-team Karen-test 實驗、Designer Multi-Layer Repo Architecture proposal）</li>
+    <li><strong>設計團隊 Git/AI 教學基礎建設啟動</strong>（AI-design Week 1-2、cross-team-submod template、design-team-repo Karen-test 實驗、Designer Multi-Layer Repo Architecture proposal）</li>
     <li><strong>Holylot 籤詩網站</strong> 早期版本上線 — Vitest 測試、SEO/OG/PWA、GA4、吉凶速查 全 60 stick、FAQ accordion</li>
-    <li><strong>Preview Hub 自動化</strong> — preview-hub-gui POC GUI、rei-hie-migration handoff、hie-rei mockup-auto-upload preview mode</li>
+    <li><strong>Preview Hub 自動化</strong> — preview-hub-gui POC GUI、design-handoff-repo handoff、design-mockup-repo mockup-auto-upload preview mode</li>
     <li><strong>line-obsidian-bot</strong> 結案上 Cloudflare Worker（4/27 移交 scheduled handler）</li>
     <li><strong>Claude Code 使用量低</strong> — 本月大量 design / docs 工作主要靠 Claude Design 或手動，5 月才大幅 ramp up</li>
   </ol>
@@ -205,7 +205,7 @@
 </div>
 
 <div class="project work">
-  <h3>TrendLife-UX-design-team <span class="repo">trendlife-general/TrendLife-UX-design-team</span> <span class="stat">25 commits</span> <span class="stat token">—</span></h3>
+  <h3>design-team-repo <span class="repo">team-org/design-team-repo</span> <span class="stat">25 commits</span> <span class="stat token">—</span></h3>
   <p class="desc">設計團隊主 repo；4 月做 subtree vs submodule 對照實驗（Karen-test branch）+ 撰寫 git-operation-guide。</p>
   <ul>
     <li><strong>4/13</strong>：Karen-test folder 切 subtree workflow testing → 改 proper subtree → 再改 submodule（pointer 更新多次比較）、subtree sync 用 GitHub Actions（.subtrees.yml）、skills/uxr submodule</li>
@@ -215,10 +215,10 @@
 </div>
 
 <div class="project work">
-  <h3>hie-rei <span class="repo">trendlife-general/hie-rei</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
-  <p class="desc">TrendLife HIE 設計團隊的 Kaleidoscope mockup repo；本月主要做自動 preview upload。</p>
+  <h3>design-mockup-repo <span class="repo">team-org/design-mockup-repo</span> <span class="stat">8 commits</span> <span class="stat token">—</span></h3>
+  <p class="desc">客戶 design 團隊的 mockup repo；本月主要做自動 preview upload。</p>
   <ul>
-    <li><strong>4/29–30</strong>：mockup-auto-upload Preview mode（one-off remote preview）、concept-shuhan 註冊 auto preview upload（含 self-contain assets + 一度 revert）、index.html rename（omni-war-room-rei / mockup-kaleida-main）</li>
+    <li><strong>4/29–30</strong>：mockup-auto-upload Preview mode（one-off remote preview）、teammate-branch 註冊 auto preview upload（含 self-contain assets + 一度 revert）、index.html rename（內部命名清理）</li>
   </ul>
 </div>
 
@@ -238,9 +238,9 @@
   <p class="desc">給其他設計團隊參考用的 submodule 工作流 template repo；目前擱置等 Department repo 配置方案。</p>
   <ul>
     <li><strong>4/13–14</strong>：設計師 CLAUDE.md snippet + setup guide、bilingual TOC、Method 1（new user）vs Method 2（existing user）、project-level Phase B hook、generic template for other teams</li>
-    <li><strong>4/15</strong>：onboarding 簡化（Claude Code 全程問問題）、bug report flow（回報到 karen_shen@trendmicro.com 而非自我除錯）、let Claude Code auto-fix AND report</li>
+    <li><strong>4/15</strong>：onboarding 簡化（Claude Code 全程問問題）、bug report flow（回報到 work email 而非自我除錯）、let Claude Code auto-fix AND report</li>
     <li><strong>4/16</strong>：Local Cache + TTL toolkit for Company / Dept guidelines</li>
-    <li><strong>4/17</strong>：subtree→submodule migration flow + guide for Peter</li>
+    <li><strong>4/17</strong>：subtree→submodule migration flow + guide for teammate</li>
   </ul>
 </div>
 
@@ -253,8 +253,8 @@
 </div>
 
 <div class="project archive">
-  <h3>rei-hie-migration <span class="repo">trendlife-general/rei-hie-migration（handoff 完成）</span> <span class="stat">—</span> <span class="stat token">—</span></h3>
-  <p class="desc">REI → HIE 設計 repo 切換的 handoff 文件 repo；handoff 完成後不再活躍維護。</p>
+  <h3>design-handoff-repo <span class="repo">team-org/design-handoff-repo（handoff 完成）</span> <span class="stat">—</span> <span class="stat token">—</span></h3>
+  <p class="desc">設計 repo 切換的 handoff 文件 repo；handoff 完成後不再活躍維護。</p>
   <ul>
     <li>4/27 加入 handoff 文件（含遷移路徑說明）</li>
   </ul>
@@ -296,8 +296,8 @@
     <li><strong>4/14</strong>：fortune-stick references 搬 backup folder + 加 project memory</li>
     <li><strong>4/15</strong>：figma-vs-git source files 追蹤、.gitignore 修正、daily-summaries / wording-reviews 改 track</li>
     <li><strong>4/21</strong>：vibe monorepo permission allowlist、git fetch * allowlist、sync-health-check 補強</li>
-    <li><strong>4/27</strong>：home-server-research with Pi 5 evaluation + rei-hie-migration handoff 紀錄</li>
-    <li><strong>4/29–30</strong>：Mac mini evaluation + home-server-research 結案、preview-hub-gui 加 gitignore、hie-rei sub-repo 加 gitignore</li>
+    <li><strong>4/27</strong>：home-server-research with Pi 5 evaluation + design-handoff-repo handoff 紀錄</li>
+    <li><strong>4/29–30</strong>：Mac mini evaluation + home-server-research 結案、preview-hub-gui 加 gitignore、design-mockup-repo sub-repo 加 gitignore</li>
   </ul>
 </div>
 
@@ -311,7 +311,7 @@
 </details>
 
 <footer>
-  Generated 2026-05-27 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
+  Generated 2026-06-11 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
 </footer>
 
 </div>

@@ -163,7 +163,7 @@
 
 <header>
   <h1>2026 年 5 月工作摘要</h1>
-  <div class="subtitle">Karen Shen · 共 5 個專案 · 127 commits (no-merge) · 1.01B tokens · USD $2,481 估算</div>
+  <div class="subtitle">Karen Shen · 共 5 個專案 · 175 commits (no-merge) · 1.01B tokens · USD $2,481 估算 <sup><a href="#token-note" style="color:var(--muted)">*</a></sup></div>
   <nav class="month-nav">
     <a href="index.html">← 月份索引</a>
     <a href="2026-04.html">← 2026-04</a>
@@ -174,9 +174,10 @@
 <section class="highlights">
   <h2>本月重點</h2>
   <ol>
-    <li><strong>design-pr-review skill</strong> 從草稿到上架 hie-rei main，再搬到 AI-design 成 source-of-truth；5/26 一天 5 PR 連續優化</li>
+    <li><strong>design-pr-review skill</strong> 從草稿到上架 design-mockup-repo main，再搬到 AI-design 成 source-of-truth；5/26 一天 5 PR 連續優化；5/29 升級**半自動 merge 衝突分流**（5 輪 codex adversarial review，40/40 e2e pass）</li>
+    <li><strong>design-context skill v0.1</strong>（5/28 從 0 到 1）— 把 design team 的 Type B reference 兩層 sync 到 designer 本機（L1 部門規範 shallow clone + L2 PM 規格 sparse-checkout），launchd cron + SessionStart hook 雙保險</li>
     <li><strong>vibe coding 教學系列</strong>（AI-design）Week 2-4 三場簡報 + designer × AI Git cheat sheet</li>
-    <li><strong>Holylot 籤詩網站</strong> 5/24 大改版 — 校對品質、citations 實驗、feedback loop</li>
+    <li><strong>Holylot 籤詩網站</strong> 5/24 大改版 — 校對品質、citations 實驗、feedback loop；5/27 啟動視覺改版 Phase 0/1（15 HTML variants 評分驅動）</li>
     <li><strong>~/dotclaude 跨裝置基礎建設</strong> — 5/20 ~/.claude/ 搬出 Jottacloud，純走 git sync 達 100% parity</li>
   </ol>
 </section>
@@ -189,8 +190,8 @@
 <div class="tab-panel active" id="panel-work">
 
 <div class="project work">
-  <h3>hie-rei <span class="repo">trendlife-general/hie-rei</span> <span class="stat">10 Karen commits + 多 PR merge</span> <span class="stat token">634M tok · USD $1,705</span></h3>
-  <p class="desc">TrendLife HIE 設計團隊的 Kaleidoscope mockup repo，設計師都在這 vibe code 寫 mockup；所有 PR review、branch hygiene、協作流程靠 <code>.claude/</code> 設定支撐。</p>
+  <h3>design-mockup-repo <span class="repo">team-org/design-mockup-repo</span> <span class="stat">17 commits + 多 PR merge</span> <span class="stat token">634M tok · USD $1,705</span></h3>
+  <p class="desc">客戶 design 團隊的 mockup repo，設計師都在這 vibe code 寫 mockup；所有 PR review、branch hygiene、協作流程靠 <code>.claude/</code> 設定支撐。</p>
   <ul>
     <li><strong>design-pr-review skill</strong>：協助設計師把 PR 畫面 render 出來比對 before/after 差異、偵測 CSS violations（hardcoded vs TLDS tokens）、按嚴重度分類的 designer-led PR review skill
       <ul>
@@ -199,17 +200,33 @@
       </ul>
     </li>
     <li><strong>mockup-auto-upload</strong>：P0 path check 加 Finder copy-path 引導（5/1）</li>
+    <li><strong>5/29 半自動 merge 衝突分流 sync 過去</strong>（PR #385）：half-merge-process-guide HTML 給團隊 + codex round-5 catch-up（stale-dotfile / merge-commit-only author edge cases）+ exec bit 還原</li>
   </ul>
 </div>
 
 <div class="project work">
-  <h3>AI-design <span class="repo">JiaWen-Shen/AI-design</span> <span class="stat">14 commits</span> <span class="stat token">100M tok · USD $224</span></h3>
+  <h3>AI-design <span class="repo">JiaWen-Shen/AI-design</span> <span class="stat">26 commits</span> <span class="stat token">100M tok · USD $224</span></h3>
   <p class="desc">給設計師的 vibe coding 教學系列簡報 repo（AI × Git 協作課程），每週一份 deck 給設計團隊內訓。</p>
   <ul>
     <li><strong>Week 2</strong>（5/11–12）：push-rejected scenario rework + PR merge strategy deck</li>
     <li><strong>Week 3</strong>（5/18–19）：Git Vocabulary（commit/push、branch/fork、changes management）、19 slides 結構（Type A/B/C repo、agent session、commit/push rhythm）、PR review + merge conflict</li>
     <li><strong>Week 4</strong>（5/26）：GitHub for Designers — AI × Git + design-pr-review，包中英文版</li>
-    <li>5/26–27：design-pr-review skill 從 <code>~/dotclaude/skills/</code> 搬來成 source-of-truth、<code>sync-to-hie-rei.sh</code>、designer × AI agent Git cheat sheet（HTML / MD / PDF）</li>
+    <li>5/26–27：design-pr-review skill 從 <code>~/dotclaude/skills/</code> 搬來成 source-of-truth、<code>sync-to-design-mockup-repo.sh</code>、designer × AI agent Git cheat sheet（HTML / MD / PDF）</li>
+    <li><strong>design-context skill v0.1（5/28 從 0 到 1）</strong>：Type B reference content（L1 部門規範 + L2 PM 規格）拉到 designer 本機，agent open session 時自動讀對檔
+      <ul>
+        <li>L1 plain shallow clone 到 <code>~/.cache/design-context/</code>（3.5 MB，全機共用）；L2 sparse-checkout 到 <code>&lt;cwd&gt;/.design-context/</code>（25 MB，避開原始 171 MB）</li>
+        <li>launchd cron 每 30 分鐘 + SessionStart hook 雙保險；更新通知 B+D 策略（macOS native notification + digest 寫入 cache）</li>
+        <li>pytest 24/24 pass + 端到端 smoke test 全綠</li>
+      </ul>
+    </li>
+    <li><strong>5/28 skill review discussion 準備</strong>：design-context intro deck + Designers GITHUB workflow PDF；design-pr-review 用 3 真實 PR demo（#301 clean baseline / #342 mass findings 260 / #357 mass findings 164 含 5 parallel variants）</li>
+    <li><strong>5/29 半自動 merge 衝突分流（feature 主體）</strong>：push 觸發 → 衝突歸屬引擎判作者（rebase/merge op + 雙側 author + <code>involves_other_author</code> fail-closed）→ 只有牽涉他人才 render 視覺比對；自己舊版本衝突照舊自動過
+      <ul>
+        <li>3 個新 script：<code>attribute-conflict.sh</code> / <code>materialize-conflict-sides.sh</code> / <code>classify-change.sh</code></li>
+        <li>5 輪 codex adversarial review：empty-stage 防呆 / fail-closed attribution / name+email 穩定身份 / 雙側 archive 完整 tree / single-file banner / jq <code>//</code> false bug / exec bit / stale-dotfile / merge-commit-only author</li>
+        <li><code>tests/run-local-conflict.sh</code>：40/40 e2e pass，11 個衝突場景（含 2 個 round-5 regression fixture）</li>
+      </ul>
+    </li>
   </ul>
 </div>
 
@@ -218,7 +235,7 @@
 <div class="tab-panel" id="panel-personal">
 
 <div class="project personal">
-  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">62 commits</span> <span class="stat token">31M tok · USD $16</span></h3>
+  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">64 commits</span> <span class="stat token">31M tok · USD $16</span></h3>
   <p class="desc">線上 AI 籤詩深度解讀網站（<a href="https://holylot.app">holylot.app</a>）— 個人副業，5/24 大改版聚焦解讀品質。</p>
   <ul>
     <li><strong>資料整理</strong>：月老籤 4 廟（台南大天后宮 27 + 樂成宮 40 + 台南媽祖 + 保生大帝）、觀音靈籤 audit + 校正 #1-36、樂成宮意解從官網重抓、關帝靈籤 #71、六十甲子籤 OCR 故事標題清理 51 cases</li>
@@ -227,16 +244,25 @@
     <li><strong>5/24 大改版</strong>：校對模型 Sonnet 4.6 → Haiku 4.5、純 regex Taiwan rules、Wikipedia 風格 citation (A+F) 後 revert 改 FAQ trust statement、e-gate 問題品質 hint（E2 籠統 / E4 多面向混雜）、feedback loop（👍👎 + 資料勘誤回報）、品牌改 Holylot 深度解籤 + 贊助外連 BobaBoba</li>
     <li><strong>CI / Infra</strong>：GitHub Actions CI/CD（lint + build + health check + concurrency）、Fly.io 冷啟動 retry、curl 安裝 flyctl 繞 superfly action 失效、Jottacloud × Next.js cache 處理（symlink 嘗試後 revert 改 GUI 排除）</li>
     <li><strong>5/26 結案</strong>：A/B v3 — regex 後處理 clean rate 實際 100%（5 個「leaks」皆 false positive）、Footer 錯字修正、feedback API 移除</li>
+    <li><strong>5/27 視覺改版 Phase 0/1 啟動</strong>：跳脫 AI 預設樣式，建立「揉合台灣傳統文化 motif × 現代 editorial sophistication」視覺系統
+      <ul>
+        <li>Phase 0 reference pool：3 個 axes（傳統籤紙 / 廟宇剪黏 / 老招牌字 × 日式新和風 / 紐約 editorial）</li>
+        <li>Phase 1 Batch 1：15 HTML variants（3 傳統 × 2 現代 × 3 temperature）+ 評分卡；✓✓ 三個（03/07/11）— 共同 pattern：左右不對稱兩欄 / 大字 ghost display / 明確 section hierarchy</li>
+      </ul>
+    </li>
   </ul>
 </div>
 
 <div class="project personal">
-  <h3>~/dotclaude <span class="repo">JiaWen-Shen/dotclaude（private）</span> <span class="stat">25 commits</span> <span class="stat token">232M tok · USD $505</span></h3>
+  <h3>~/dotclaude <span class="repo">JiaWen-Shen/dotclaude（private）</span> <span class="stat">42 commits</span> <span class="stat token">232M tok · USD $505</span></h3>
   <p class="desc">Claude Code 全域設定（CLAUDE.md / skills / hooks / scripts）的 source-of-truth git repo，跨裝置同步機制。</p>
   <ul>
     <li><strong>5/20 大遷移</strong>：<code>~/.claude/</code> 搬出 Jottacloud（jottad bulk-move 砍過 36 個 skill 之教訓）、claude-hooks 併入、bootstrap-symlinks.sh + bootstrap-nested-repos.sh、strip secrets + untrack runtime state、達 100% cross-device parity</li>
     <li><strong>5/21</strong> design-pr-review submodule 多次 bump：multi-line CSS parser / 3-layer self-verification / sync-scroll fix / verify-wrapper cluster scope / SVG augmented missing / rule-scope fix</li>
     <li><strong>5/26–27</strong> design-pr-review skill 移出 dotclaude（避免 auto-load 成個人 skill）、team skill development feedback memory、MSGraph token auto-refresh feedback、fortune-stick status update、obsolete plans 清除</li>
+    <li><strong>5/27</strong> typeC repo skill TODO + holylot Phase 1 Batch 1 MEMORY 更新</li>
+    <li><strong>5/28</strong> design-context skill plan（<code>plans/composed-drifting-naur.md</code>）+ skill review discussion deck MEMORY；rename 'workshop' → 'skill review discussion' 對齊會議命名</li>
+    <li><strong>5/29</strong> msgraph device-sync gap 紀錄（A 機調查 TODO）、5/20 backups deletion tracking、stale entries 清理（done items / 過時 facts）</li>
   </ul>
 </div>
 
@@ -256,19 +282,20 @@
 
 </div><!-- /panel-personal -->
 
-<details class="methodology">
+<details class="methodology" id="token-note">
   <summary>Token 計算方法</summary>
+  <p><strong>* 註腳</strong>：token / USD 數字為 <strong>5/27 統計快照</strong>；5/27–5/31 新增 +48 commits（design-context skill / half-merge feature / holylot Phase 0/1 等）尚未重算進 token 統計，commit 數已更新到月底。</p>
   <p>從 <code>~/.claude/projects/-Users-karen-shen-Jottacloud-vibe/</code> 的 session JSONL 抓出每則 message 的 <code>usage</code>（input / output / cache_creation / cache_read），先以 <code>cwd</code> 分類，落在 vibe 根目錄者再用 session 內 tool calls 的 file paths 歸到 dominant project。剩 0.5% 無法歸類。</p>
   <p>金額按 Claude Sonnet 4.6 standard 估算（$3 / $15 input / output per M、$3.75 cache 5m write、$6 cache 1h write、$0.30 cache read）。實際帳單以 Anthropic 為準；Opus / Haiku 訊息按 model 欄位個別計價。Cache read 佔總 token 量 96%，但只佔成本約 12%。</p>
   <ul>
     <li>不計：merge commits、其他人在同 repo 的 commits</li>
-    <li>計入：自己 author 的 commits（兩個 email：karen_shen@trendmicro.com + kevenkmupsy@gmail.com）</li>
+    <li>計入：自己 author 的 commits（兩個 email：個人 + 工作）</li>
     <li>未分類的 4.8M tokens 多半是 vibe 根目錄 cross-project meta 操作</li>
   </ul>
 </details>
 
 <footer>
-  Generated 2026-05-27 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
+  Generated 2026-06-11 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
 </footer>
 
 </div>
