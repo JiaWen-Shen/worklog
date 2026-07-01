@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>Worklog · 2026 年 6 月</title>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --fg: #1a1a1a;
+    --muted: #6b7280;
+    --accent-work: #2563eb;
+    --accent-personal: #059669;
+    --accent-archive: #9ca3af;
+    --border: #e5e7eb;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 40px 24px 80px;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  header { border-bottom: 1px solid var(--border); padding-bottom: 24px; margin-bottom: 40px; }
+  h1 { font-size: 32px; margin: 0 0 8px; font-weight: 700; letter-spacing: -0.02em; }
+  .subtitle { color: var(--muted); font-size: 14px; }
+  nav.month-nav { margin-top: 12px; font-size: 14px; }
+  nav.month-nav a { color: var(--muted); text-decoration: none; margin-right: 12px; }
+  nav.month-nav a:hover { color: var(--fg); }
+  nav.month-nav .current { color: var(--fg); font-weight: 600; }
+
+  .highlights {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+  }
+  .highlights h2 { font-size: 16px; margin: 0 0 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .highlights ol { margin: 0; padding-left: 20px; }
+  .highlights li { margin-bottom: 6px; }
+
+  .usage-chart {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .usage-chart h2 { font-size: 16px; margin: 0 0 4px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .usage-chart .note { font-size: 12px; color: var(--muted); margin: 0 0 12px; }
+  .usage-chart svg { width: 100%; height: auto; display: block; }
+  .usage-legend { display: flex; gap: 20px; font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .usage-legend .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: inherit;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: var(--fg); }
+  .tab-btn.active { color: var(--fg); }
+  .tab-btn[data-tab="personal"].active { border-bottom-color: var(--accent-personal); }
+  .tab-btn[data-tab="work"].active { border-bottom-color: var(--accent-work); }
+  .tab-btn[data-tab="archive"].active { border-bottom-color: var(--accent-archive); }
+  .tab-btn .count {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: normal;
+    margin-left: 4px;
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  .project {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .project.work { border-left-color: var(--accent-work); }
+  .project.personal { border-left-color: var(--accent-personal); }
+  .project.archive { border-left-color: var(--accent-archive); opacity: 0.85; }
+  h4.archive-divider {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-archive);
+    border-top: 1px dashed var(--border);
+    padding-top: 20px;
+    margin: 28px 0 16px;
+    font-weight: 600;
+  }
+  h4.archive-divider::before { content: "▤ "; }
+  .project h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .project .repo {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: normal;
+  }
+  .project .desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 16px;
+    font-style: italic;
+  }
+  .project ul { margin: 0; padding-left: 20px; }
+  .project ul li { margin-bottom: 8px; }
+  .project ul ul { margin-top: 6px; padding-left: 18px; }
+  .project ul ul li { margin-bottom: 2px; font-size: 14px; color: #374151; }
+  .stat {
+    display: inline-block;
+    font-size: 12px;
+    background: #f3f4f6;
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: normal;
+  }
+  .methodology {
+    margin-top: 40px;
+    padding: 16px 20px;
+    background: #fafaf7;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .methodology summary { cursor: pointer; font-weight: 600; color: var(--fg); }
+  .methodology p, .methodology ul { margin: 8px 0; }
+  .methodology code { font-size: 12px; }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.9em;
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  footer { margin-top: 60px; text-align: center; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>2026 年 6 月工作摘要</h1>
+  <div class="subtitle">Karen Shen · 共 13 個專案 · 184 commits (no-merge) · token/成本本月未計 <sup><a href="#token-note" style="color:var(--muted)">*</a></sup></div>
+  <nav class="month-nav">
+    <a href="index.html">← 月份索引</a>
+    <a href="2026-05.html">← 2026-05</a>
+    <span class="current">2026-06</span>
+  </nav>
+</header>
+
+<section class="highlights">
+  <h2>本月重點</h2>
+  <ol>
+    <li><strong>Qoome 客戶 RAG pipeline 修復</strong> — 抓出 2 個 production 資料完整性 bug（圖資料損毀、空章節產生幻覺摘要），從根因調查到 guard 設計到跟工程端 end-to-end 驗證（6/21-6/27）</li>
+    <li><strong>語音克隆方法論 R&D</strong>（creative-content-generator + Qoome persona 工作）— 跨數週研究「為何 AI 難以模仿特定人的寫作聲音」，結合 NLP 文獻 + 真實互動數據 + 手做評測工具，收斂成「voice profile → 平台改寫」兩階段方法論，同時套用在客戶 persona 案與個人聲音案</li>
+    <li><strong>Internal design-ops repo「context bloat diet」</strong>（6/18-6/19）— 量測並砍掉每 session context 開銷 36-44%，加 lint gate 防回流；順手抓出一個團隊分析 pipeline 漏算多數貢獻者活動的 bug 並修復三層防呆</li>
+    <li><strong>dotclaude 基礎設施大修</strong> — 5 個 nested repo subtree 拍平成單一 repo（6/9）、多帳號 SSH 設定、memory 格式遷移、cache 設定修正（省下實際 token 成本，6/22）</li>
+    <li><strong>Instagram 數據深潛分析</strong>（creative-content-generator，6/17）— 分析公司 IG 帳號 3+ 年貼文歷史，控制變數後翻案原先「避開生活風格內容」的結論，出一份三語互動報告供 stakeholder 會議用</li>
+    <li><strong>對設計團隊出的小工具</strong> — 本月出貨 3 個小工具（cache 省成本包、雙語 model 導入指南、新協作 repo），每個都在「回報機制」上踩過一次坑（回報率實測 0%）才換到真正有效的方案</li>
+  </ol>
+</section>
+
+<section class="usage-chart">
+  <h2>Claude Code 用量 — 累積線圖</h2>
+  <p class="note">以天為單位，缺值（skip / TBD）維持前一天數值。首筆實測 6/2，故從 6/2 起繪。</p>
+  <svg viewBox="0 0 860 260" role="img" aria-label="6月 Claude Code usage 累積線圖">
+    <line x1="40" y1="230.0" x2="840" y2="230.0" stroke="#e5e7eb" stroke-width="1"/>
+    <text x="32" y="234.0" font-size="10" fill="#6b7280" text-anchor="end">0%</text>
+    <line x1="40" y1="177.5" x2="840" y2="177.5" stroke="#e5e7eb" stroke-width="1"/>
+    <text x="32" y="181.5" font-size="10" fill="#6b7280" text-anchor="end">25%</text>
+    <line x1="40" y1="125.0" x2="840" y2="125.0" stroke="#e5e7eb" stroke-width="1"/>
+    <text x="32" y="129.0" font-size="10" fill="#6b7280" text-anchor="end">50%</text>
+    <line x1="40" y1="72.5" x2="840" y2="72.5" stroke="#e5e7eb" stroke-width="1"/>
+    <text x="32" y="76.5" font-size="10" fill="#6b7280" text-anchor="end">75%</text>
+    <line x1="40" y1="20.0" x2="840" y2="20.0" stroke="#e5e7eb" stroke-width="1"/>
+    <text x="32" y="24.0" font-size="10" fill="#6b7280" text-anchor="end">100%</text>
+
+    <polyline points="40.0,185.9 68.6,164.9 97.1,154.4 125.7,154.4 154.3,154.4 182.9,150.2 211.4,141.8 240.0,131.3 268.6,131.3 297.1,114.5 325.7,112.4 354.3,112.4 382.9,112.4 411.4,108.2 440.0,97.7 468.6,97.7 497.1,83.0 525.7,76.7 554.3,76.7 582.9,76.7 611.4,59.9 640.0,47.3 668.6,47.3 697.1,30.5 725.7,24.2 754.3,24.2 782.9,24.2 811.4,20.0 840.0,20.0"
+      fill="none" stroke="#2563eb" stroke-width="2" />
+
+    <circle cx="40.0" cy="185.9" r="3.5" fill="#2563eb" />
+    <circle cx="68.6" cy="164.9" r="3.5" fill="#2563eb" />
+    <circle cx="97.1" cy="154.4" r="3.5" fill="#2563eb" />
+    <circle cx="125.7" cy="154.4" r="2" fill="#cbd5e1" />
+    <circle cx="154.3" cy="154.4" r="2" fill="#cbd5e1" />
+    <circle cx="182.9" cy="150.2" r="3.5" fill="#2563eb" />
+    <circle cx="211.4" cy="141.8" r="3.5" fill="#2563eb" />
+    <circle cx="240.0" cy="131.3" r="3.5" fill="#2563eb" />
+    <circle cx="268.6" cy="131.3" r="2" fill="#cbd5e1" />
+    <circle cx="297.1" cy="114.5" r="3.5" fill="#2563eb" />
+    <circle cx="325.7" cy="112.4" r="3.5" fill="#2563eb" />
+    <circle cx="354.3" cy="112.4" r="2" fill="#cbd5e1" />
+    <circle cx="382.9" cy="112.4" r="2" fill="#cbd5e1" />
+    <circle cx="411.4" cy="108.2" r="3.5" fill="#2563eb" />
+    <circle cx="440.0" cy="97.7" r="3.5" fill="#2563eb" />
+    <circle cx="468.6" cy="97.7" r="2" fill="#cbd5e1" />
+    <circle cx="497.1" cy="83.0" r="3.5" fill="#2563eb" />
+    <circle cx="525.7" cy="76.7" r="3.5" fill="#2563eb" />
+    <circle cx="554.3" cy="76.7" r="2" fill="#cbd5e1" />
+    <circle cx="582.9" cy="76.7" r="2" fill="#cbd5e1" />
+    <circle cx="611.4" cy="59.9" r="3.5" fill="#2563eb" />
+    <circle cx="640.0" cy="47.3" r="3.5" fill="#2563eb" />
+    <circle cx="668.6" cy="47.3" r="2" fill="#cbd5e1" />
+    <circle cx="697.1" cy="30.5" r="3.5" fill="#2563eb" />
+    <circle cx="725.7" cy="24.2" r="3.5" fill="#2563eb" />
+    <circle cx="754.3" cy="24.2" r="2" fill="#cbd5e1" />
+    <circle cx="782.9" cy="24.2" r="2" fill="#cbd5e1" />
+    <circle cx="811.4" cy="20.0" r="3.5" fill="#2563eb" />
+    <circle cx="840.0" cy="20.0" r="2" fill="#cbd5e1" />
+
+    <text x="40.0" y="246" font-size="10" fill="#6b7280" text-anchor="middle">6/2</text>
+    <text x="125.7" y="246" font-size="10" fill="#6b7280" text-anchor="middle">6/5</text>
+    <text x="268.6" y="246" font-size="10" fill="#6b7280" text-anchor="middle">6/10</text>
+    <text x="411.4" y="246" font-size="10" fill="#6b7280" text-anchor="middle">6/15</text>
+    <text x="554.3" y="246" font-size="10" fill="#6b7280" text-anchor="middle">6/20</text>
+    <text x="697.1" y="246" font-size="10" fill="#6b7280" text-anchor="middle">6/25</text>
+    <text x="840.0" y="246" font-size="10" fill="#6b7280" text-anchor="middle">6/30</text>
+  </svg>
+  <div class="usage-legend">
+    <span><span class="dot" style="background:#2563eb"></span>當日實測值</span>
+    <span><span class="dot" style="background:#cbd5e1"></span>補值（沿用前一天，無 <code>/usage</code> 回報或個人帳號無基準）</span>
+  </div>
+</section>
+
+<div class="tabs" role="tablist">
+  <button class="tab-btn active" data-tab="work" role="tab">工作<span class="count">(8)</span></button>
+  <button class="tab-btn" data-tab="personal" role="tab">個人<span class="count">(5)</span></button>
+</div>
+
+<div class="tab-panel active" id="panel-work">
+
+<div class="project work">
+  <h3>Qoome <span class="repo">qoome-workspace + qoome-content-factory</span> <span class="stat">17 commits</span></h3>
+  <p class="desc">客戶專案 — AI 醫師人格（Edge persona）/ 知識平台，Karen 是 Edge Frontend 全端負責人，本月主力在 RAG pipeline 品質與 persona 萃取方法論。</p>
+  <ul>
+    <li><strong>6/7-6/10</strong>：onboarding 盤點六個 repo 生態系，開站 <code>qoome-edge-share</code> 架構分享頁；起草 Persona/Soul Extraction v4（evidence grading + known-limitations gate + 雙檔輸出 schema）</li>
+    <li><strong>6/19-6/20</strong>：跟客戶端對齊後修正架構圖 12 處誤解；用「顯性/隱性風格」框架診斷 persona 輸出「風格死板」問題，讀 5 篇文獻提出兩階段方案</li>
+    <li><strong>6/21</strong>：真實抽取測試（172 頁書進 ETL pipeline）抓出章節壓縮 bug（60 頁章節被壓成 ~500 字摘要，~36x 壓縮率），提 4 個修法選項；建 blind A/B 評測頁供客戶端評分新舊版 persona 輸出</li>
+    <li><strong>6/22-6/24</strong>：寫 4 階段 RAG pipeline 修復計畫（圖資料損毀 + 空章節幻覺摘要），含 sentinel-marker guard 設計 + 770 行 Phase 1/2 回復計畫</li>
+    <li><strong>6/26-6/27</strong>：客戶端工程師 ship guard fix（n8n pipeline 驗證兩本測試書 + bonus retry-loop bug fix）、Karen review + merge；正式結案（49 本書初估縮到實際 2 row 受影響）；順手 review 一份 541 行同事 persona PoC 補充文件</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>creative-content-generator <span class="repo">karen-shen_tmemu/creative-content-generator</span> <span class="stat">23 commits</span></h3>
+  <p class="desc">內部行銷協作的 evaluation-driven AI 創意內容 POC；後來也變成個人聲音克隆方法論 R&D 的主場。</p>
+  <ul>
+    <li><strong>6/12-6/16</strong>：搭 repo + 7 輪提案 deck 迭代；轉向「用視覺品質 rubric 強化既有 IG 內容 skill」而非另起系統；做出獨立 HTML 評測工具</li>
+    <li><strong>6/17</strong>：深度量化分析公司 IG 帳號 ~223 篇貼文（2022-2025）——輪播組互動率勝 reels（雖然 reels 觸及更高）；控制變數後翻案「避開生活風格內容」結論；出 8 圖表三語互動報告</li>
+    <li><strong>6/19-6/21</strong>：延伸「風格模仿天花板」研究（AI 為何難模仿特定人聲音），寫成引文獻的正式報告</li>
+    <li><strong>6/22</strong>：出「Lane B」——三語 blind stakeholder 評測頁（Google Apps Script + Sheets），部署成獨立公開 repo <code>insta-eval-poc</code></li>
+    <li><strong>6/25-6/26</strong>：轉向「個人聲音克隆」案例研究（用知名作家風格當驗證基準 + Karen 自己的聲音案並行）；手工建 30 篇 ~10,000 字語料並統計驗證；V0 三方 blind 評測（baseline AI / trained AI / 真人）結果接近平手，promote 出兩階段「voice profile → 平台改寫」架構</li>
+    <li><strong>6/29-6/30</strong>：V0 評測頁上線（隱性層 rubric）；V2 voice-writing skill（更銳利的「反預期收尾、不加正能量結尾」規則）+ baseline 比較確認 skill 真正價值在結構而非文采；開第二個聲音案例（同事案）+ 5 案 blind 評測頁</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>Internal design-ops repo <span class="repo">(company-internal，repo 名不公開)</span> <span class="stat">18 commits</span></h3>
+  <p class="desc">設計團隊主要共用 repo（skills / hooks / CI / onboarding），Karen 貢獻工具與基礎設施。</p>
+  <ul>
+    <li><strong>6/18-6/19</strong>：「context bloat diet」— 診斷 + 量測每 session context 開銷，砍主指令檔 ~12%、收斂 11 個 skill description、拆 5 個過大 skill body 到 reference doc，加 lint script + pre-commit hook 防回流；實測省下 memory-file 36% + skill-description 44% + 總 context 2.8%（兩輪 reviewer 打回「數字沒驗證」後才用實測數字上）</li>
+    <li><strong>6/19</strong>：兩輪 AI code review 抓出一個真的正確性 bug、一個 CJK 計數 bug、一個既存壞掉的 CLI flag；順手診斷團隊分析 pipeline 只抓到 2/7 貢獻者活動的根因（trigger-scope bug），修三層防呆（git-hook installer + session-start bootstrap backfill + throttled auto-publish）</li>
+    <li><strong>6/22-6/24</strong>：telemetry PR review 過、merge；bloat-diet PR 解完 50 commits upstream drift 衝突後 merge</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>AI-design <span class="repo">JiaWen-Shen/AI-design</span> <span class="stat">19 commits</span></h3>
+  <p class="desc">給設計師的 vibe coding 教學系列簡報 repo，每週一份 deck。</p>
+  <ul>
+    <li><strong>6/8</strong>：Week 6 deck（跨 repo 架構回顧、working vs reference repo 區分、跨裝置同步雷區、錯誤復原）</li>
+    <li><strong>6/18</strong>：教團隊設定預設 AI model 的短 deck + VPN 帳號遷移說明</li>
+    <li><strong>6/23</strong>：三個提案（model 導入指南 + VPN 遷移 + prompt cache 設定）合併成一份雙語互動 HTML 指南（含自檢流程 + 一鍵回報），並研究確認某新版 model 在 coding agent 上 token 效率倒退 2-3 倍，鎖團隊預設用舊版 + 限定 effort 設定</li>
+    <li><strong>6/29-6/30</strong>：Week 6 deck 全部重寫（config-that-travels-with-you + 怎麼挑/設定 AI model 兩主題）、加雙語切換 + 逐區複製按鈕、補講者致謝頁 + 截圖走查頁</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>team/design-ops-collab <span class="repo">(company-internal，原名不公開)</span> <span class="stat">8 commits</span></h3>
+  <p class="desc">設計/AI 導入團隊新的協作 repo，週會後成立，放共用 data pool、工具、onboarding 包。</p>
+  <ul>
+    <li><strong>6/23</strong>：搭 v0（README、貢獻指南、PR template、.gitignore）；訂較輕量的 PR 核准分級 + ops 導向 commit-type 分類，跟旗艦 repo 的嚴格規則區隔</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>team-claude-code-1hr-cache <span class="repo">karen-shen_tmemu/team-claude-code-1hr-cache</span> <span class="stat">6 commits</span></h3>
+  <p class="desc">給設計團隊的小工具包，教他們開啟 AI coding 工具的 1 小時 cache 省成本設定。</p>
+  <ul>
+    <li><strong>6/22</strong>：出貨 5 檔 rollout package（設定 script + 驗證 script + 一鍵貼上 prompt + 雙語公告）；回報機制兩輪迭代（GitHub issue-first + Teams fallback → 發現實測完成率 0% 後改 Google Apps Script + Sheet endpoint）</li>
+    <li><strong>6/23</strong>：加第二個 Apps Script endpoint，跟另一個遷移追蹤案共用（按 hostname 去重）</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>design-context <span class="repo">karen-shen_tmemu/design-context</span> <span class="stat">10 commits</span></h3>
+  <p class="desc">design-context skill（5 月從 0 到 1）本月獨立成自己的 repo，Type-B reference sync + design-notes 功能。</p>
+  <ul>
+    <li><strong>6/2</strong>：approach-B polling + design-time context + Teams 公告 skill；design-notes 加編輯模式閘控（只在編輯模式可刪）+ 摺疊預設 + sidebar index；sync script 從舊路徑 retarget 到新 repo</li>
+  </ul>
+</div>
+
+<div class="project work">
+  <h3>team/2026-team-offsite <span class="repo">(內部活動網站，原名不公開)</span> <span class="stat">20 commits</span></h3>
+  <p class="desc">~17 人團隊 offsite 的輕量決策/投票工具。</p>
+  <ul>
+    <li><strong>6/8</strong>：搭提案 deck（兩方案比較，含預算表 + 行程 + open items），跟另兩位協作者走 PR flow</li>
+    <li><strong>6/12</strong>：新場地報價出來後改一方案的下午活動 + 預算</li>
+    <li><strong>6/15</strong>：另建一個簡化版公開投票頁（預算表/內部備註拿掉）+ 雙語切換，定活動日期</li>
+    <li><strong>6/22</strong>：活動定案（日期/場地/活動），結案</li>
+  </ul>
+</div>
+
+</div><!-- /panel-work -->
+
+<div class="tab-panel" id="panel-personal">
+
+<div class="project personal">
+  <h3>~/dotclaude <span class="repo">JiaWen-Shen/dotclaude（private）</span> <span class="stat">50 commits</span></h3>
+  <p class="desc">Claude Code 全域設定（CLAUDE.md / skills / hooks / memory）source-of-truth git repo，跨裝置同步機制。本月 commit 量最大。</p>
+  <ul>
+    <li><strong>6/2-6/3</strong>：寫正式新專案 onboarding checklist + 決策樹</li>
+    <li><strong>6/9</strong>：把 5 個 nested sub-repo 用 <code>git subtree</code> 拍平進主 repo（保留完整 history）、封存原本 5 個獨立 GitHub repo；修好一個藏了 8 年的 macOS <code>timeout</code> 指令 silent bug（一直悄悄弄壞一個 sync hook）</li>
+    <li><strong>6/10-6/12</strong>：設定多帳號 SSH key alias 修好兩個 GitHub 帳號隨機認證失敗問題；一次 repo 轉移到 org 的意外把 Karen 自己的 admin 權限降級，事後補寫雷區筆記</li>
+    <li><strong>6/16</strong>：27 個 memory 檔遷移到跟 open memory-format spec 對齊的標準 frontmatter</li>
+    <li><strong>6/18</strong>：修好第二台機器上 session-start hook 缺 Node.js 依賴的問題</li>
+    <li><strong>6/22</strong>：抓到兩個互相打架的 cache 時長設定悄悄互相抵銷、讓 1 小時 cache 沒生效，修正；裝一個 token 壓縮 skill 做評估</li>
+    <li><strong>6/27</strong>：全域指令檔砍 ~27%（把 coding conventions + 行為原則抽到獨立 import 檔）</li>
+    <li><strong>6/29</strong>：預設 model 設定改成 plan-vs-execution 混合路由模式（預期重編輯 session 省 50-70% token）</li>
+    <li><strong>Morning Briefing skill</strong>：6/9 重建前處理層（token 自動更新 + 確定性抓每日語錄，不燒大 LLM call）；6/29 修好「語錄每天都一樣」bug（原本永遠抓第一頁第一條，改成日期種子隨機翻頁 + 選卡，池子 ~300 條）</li>
+  </ul>
+</div>
+
+<div class="project personal">
+  <h3>agent-daily-flow <span class="repo">karen-shen_tmemu/agent-daily-flow</span> <span class="stat">8 commits</span></h3>
+  <p class="desc">Karen 個人每日 agent flow 工具的分享版本。</p>
+  <ul>
+    <li><strong>6/11-6/12</strong>：抽平 automation/ 結構、補齊多裝置 README 說明；一次意外 repo 轉移到 org 降級後，重建到個人帳號下 + 開協作權限給同事</li>
+  </ul>
+</div>
+
+<div class="project personal">
+  <h3>insta-eval-poc <span class="repo">JiaWen-Shen/insta-eval-poc</span> <span class="stat">3 commits</span></h3>
+  <p class="desc">三語（中/英/日）IG 內容 blind A/B 評測頁，從 creative-content-generator 工作分拆出的獨立公開 repo。</p>
+  <ul>
+    <li><strong>6/22</strong>：從 creative-content-generator 分拆成獨立公開 repo，部署到 GitHub Pages</li>
+  </ul>
+</div>
+
+<div class="project personal">
+  <h3>worklog <span class="repo">JiaWen-Shen/worklog</span> <span class="stat">1 commit</span></h3>
+  <p class="desc">這個 portfolio 網站本身。</p>
+  <ul>
+    <li><strong>6/11</strong>：sanitize 後正式公開上 GitHub Pages（redact 公司信箱、內部 repo 名、product codename）、補完 5 月頁缺的一週內容，寫成標準 sanitize checklist memory</li>
+  </ul>
+</div>
+
+<h4 class="archive-divider">本月無進度</h4>
+
+<div class="project archive">
+  <h3>fortune-stick-web (Holylot) <span class="repo">JiaWen-Shen/fortune-stick-web</span> <span class="stat">0 commits</span></h3>
+  <p class="desc">線上 AI 籤詩深度解讀網站（<a href="https://holylot.app">holylot.app</a>）— 個人副業。</p>
+  <ul>
+    <li>5 月啟動的視覺改版 Phase 1 Batch 2 本月沒有動，WIP 表上持續標 🅿️ 擱置</li>
+  </ul>
+</div>
+
+</div><!-- /panel-personal -->
+
+<details class="methodology" id="token-note">
+  <summary>統計方法 / 名稱處理說明</summary>
+  <p><strong>* Token / 成本</strong>：本月 daily summary 只留 commit hash 與敘述文字，沒有逐 repo token/cost 快照（跟 5 月頁不同），故本月不列數字，避免瞎猜。</p>
+  <p>Commit 數為 <code>git log --no-merges</code> 依 Karen 本人 author email（個人 + EMU 帳號）在 2026-06-01~06-30 區間過濾後的實際計數，非估算。</p>
+  <p>幾個公司內部 repo 因涉及未公開的內部 codename / 同事姓名，已在本頁做以下處理：repo 真實名稱以「company-internal，名稱不公開」或通用代稱（<code>team/design-ops-collab</code>、<code>team/2026-team-offsite</code>）取代；文中提及的同事一律改稱「同事」/「客戶端工程師」等泛稱，不用真名。Qoome 為外部客戶專案，名稱維持不變。</p>
+</details>
+
+<footer>
+  Generated 2026-07-02 · <a href="https://github.com/JiaWen-Shen/worklog">JiaWen-Shen/worklog</a>
+</footer>
+
+</div>
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabs.forEach(b => b.classList.toggle('active', b === btn));
+      panels.forEach(p => p.classList.toggle('active', p.id === 'panel-' + target));
+      history.replaceState(null, '', '#' + target);
+    });
+  });
+  // Honor URL hash on load
+  const hash = location.hash.replace('#', '');
+  if (hash === 'work' || hash === 'personal') {
+    document.querySelector(`.tab-btn[data-tab="${hash}"]`).click();
+  }
+</script>
+</body>
+</html>
